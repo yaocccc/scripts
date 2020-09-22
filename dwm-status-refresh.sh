@@ -1,13 +1,13 @@
 #!/bin/bash
 
 print_privoxy(){
-    PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`
+    PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`;
     if [ "$PIDS" != "" ]; then echo "privoxy : on |"; fi
 }
 
 print_cpu(){
-    cpuusage=$(ps -A -o pcpu | tail -n 1 | paste -sd+ | bc)
-    echo "$cpuusage%"
+    cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}');
+    echo "$cpuusage";
 }
 
 print_mem(){
@@ -15,7 +15,7 @@ print_mem(){
 	memtotal=$(($(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}') / 1000000));
     memavailablepercent=$(expr $memavailable / $memtotal);
     memusedpercent=$(expr 100 - $memavailablepercent);
-	echo "$memused_percent%";
+	echo "$memusedpercent%";
 }
 
 print_alsa(){
