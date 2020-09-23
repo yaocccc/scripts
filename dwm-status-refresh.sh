@@ -7,7 +7,7 @@ print_privoxy(){
 
 print_cpu(){
     cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}');
-    echo "👽$cpuusage";
+    echo "👽$cpuusage%";
 }
 
 print_mem(){
@@ -15,7 +15,7 @@ print_mem(){
 	memtotal=$(($(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}') / 1000000));
     memavailablepercent=$(expr $memavailable / $memtotal);
     memusedpercent=$(expr 100 - $memavailablepercent);
-	echo "$memusedpercent";
+	echo "$memusedpercent%";
 }
 
 print_alsa(){
@@ -25,7 +25,7 @@ print_alsa(){
     elif [ "$vol" -gt 0 ] && [ "$vol" -le 33 ]; then volsign="🔈";
     elif [ "$vol" -gt 33 ] && [ "$vol" -le 66 ]; then volsign="🔉";
     else volsign="🔊"; fi
-    echo "$volsign$vol"
+    echo "$volsign$vol%"
 }
 
 print_bat(){
@@ -36,7 +36,7 @@ print_bat(){
     elif [ "$batpercent" -le 50 ]; then batsign="";
     elif [ "$batpercent" -le 95 ]; then batsign="";
     else chargesign=""; batsign="☻"; fi
-    echo "$chargestatus$batsign$batpercent"
+    echo "$chargestatus$batsign$batpercent%"
 }
 
 print_date(){
@@ -44,5 +44,5 @@ print_date(){
     echo "$date"
 }
 
-xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)%|$(print_mem)%|$(print_alsa)%|$(print_bat)"
+xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"
 exit 0
