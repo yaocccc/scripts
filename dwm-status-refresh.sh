@@ -11,10 +11,9 @@ print_cpu(){
 }
 
 print_mem(){
-	memavailable=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 10000));
-	memtotal=$(($(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}') / 1000000));
-    memavailablepercent=$(expr $memavailable / $memtotal);
-    memusedpercent=$(expr 100 - $memavailablepercent);
+	memavailable=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}');
+	memtotal=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}');
+    memusedpercent=$[ ($memtotal - $memavailable) * 100 / $memtotal ];
 	echo "$memusedpercent%";
 }
 
