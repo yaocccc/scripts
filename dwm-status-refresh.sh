@@ -35,7 +35,7 @@ print_bat(){
     elif [ "$batpercent" -le 50 ]; then batsign="";
     elif [ "$batpercent" -le 95 ]; then batsign="";
     else chargesign=""; batsign="☻"; fi
-    echo "$chargestatus$batsign$batpercent%"
+    echo "$chargesign$batsign$batpercent%"
 }
 
 print_date(){
