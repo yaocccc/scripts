@@ -29,7 +29,7 @@ print_alsa(){
 
 print_bat(){
     batpercent=$(expr $(acpi -b | awk '{print $4}' | grep -Eo "[0-9]+" | paste -sd+ | bc))
-    if [ "$(acpi -b | grep discharging)" == "" ]; then chargesign=""; fi
+    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ]; then chargesign=""; fi
     if [ "$batpercent" -le 10 ]; then batsign="";
     elif [ "$batpercent" -le 25 ]; then batsign="";
     elif [ "$batpercent" -le 50 ]; then batsign="";
