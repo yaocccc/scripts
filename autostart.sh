@@ -10,4 +10,5 @@ xfce4-power-manager &
 bluetoothctl power on &
 /usr/lib/gsd-xsettings &
 ~/scripts/set-screen.sh work &
+~/scripts/set-privoxy.sh on &
 ~/scripts/autostart_wait.sh &
