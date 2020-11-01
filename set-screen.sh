@@ -20,4 +20,4 @@ case $1 in
     *) one ;;
 esac
 
-feh --randomize --bg-fill ~/Pictures/壁纸/*
+feh --randomize --bg-fill ~/Pictures/*
