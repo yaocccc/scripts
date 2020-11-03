@@ -8,12 +8,14 @@ ML=101.132.35.191
 YM=47.103.91.121
 
 list() {
+    echo
     echo sv=$SV
     echo tt=$TT
     echo tt2=$TT2
     echo pg=$PG
     echo ml=$ML
     echo ym=$YM
+    echo
 }
 
 case $1 in
