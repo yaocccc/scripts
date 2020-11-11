@@ -5,15 +5,15 @@ PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $
 
 on() {
     if [ "$PIDS" != "" ]; then echo "privoxy on, ok"; exit 0; fi
-    bash $EDIT_PRIFILE http_proxy 127.0.0.1:8118
-    bash $EDIT_PRIFILE https_proxy 127.0.0.1:8118
+    $EDIT_PRIFILE http_proxy 127.0.0.1:8118
+    $EDIT_PRIFILE https_proxy 127.0.0.1:8118
     /usr/bin/privoxy --no-daemon /etc/privoxy/config &
 }
 
 off() {
     if [ "$PIDS" == "" ]; then echo "privoxy off, ok"; exit 0; fi
-    bash $EDIT_PRIFILE http_proxy ''
-    bash $EDIT_PRIFILE https_proxy ''
+    $EDIT_PRIFILE http_proxy ''
+    $EDIT_PRIFILE https_proxy ''
     killall privoxy &
 }
 

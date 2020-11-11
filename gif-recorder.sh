@@ -4,13 +4,14 @@ gif_file=~/show.gif
 let x y w h
 source ~/.profile
 
-while getopts "m:e:d:" opt
+while getopts "m:e:d:w:f:" opt
 do
     case $opt in
         m) mode=$OPTARG ;;
         e) cmd=$OPTARG ;;
         d) record_time=$OPTARG ;;
         w) wait_time=$OPTARG ;;
+        f) gif_file=$OPTARG ;;
     esac
 done
 
@@ -33,10 +34,10 @@ case $SCREEN_MODE in
         ;;
     *)
         case $mode in
-            1) let x=$S1_X     y=$S1_Y     w=$S1_W h=$S1_H ;;
-            2) let x=$S2_X     y=$S2_Y     w=$S2_W h=$S2_H ;;
-            3) let x=$S2_X+475 y=$S2_Y+188 w=971   h=785 ;;
-            4) let x=$S2_X+976 y=$S2_Y+34  w=937   h=513 ;;
+            1) let x=$S1_X     y=$S1_Y     w=$S1_W    h=$S1_H ;;
+            2) let x=$S2_X     y=$S2_Y     w=$S2_W    h=$S2_H ;;
+            3) let x=$S2_X+475 y=$S2_Y+188 w=971      h=785 ;;
+            4) let x=$S2_X+976 y=$S2_Y+34  w=937      h=513 ;;
             *)
                 echo 1: 内置屏幕-全屏
                 echo 2: 外接屏幕-全屏
