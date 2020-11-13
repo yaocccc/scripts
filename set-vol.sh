@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 case $1 in
     up) /usr/bin/amixer -qM set Master 5%+ umute ;;

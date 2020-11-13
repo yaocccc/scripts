@@ -1,19 +1,18 @@
-#!/bin/sh
+#! /bin/bash
 
-EDIT_PRIFILE=~/scripts/edit-profile.sh
 PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`
 
 on() {
     if [ "$PIDS" != "" ]; then echo "privoxy on, ok"; exit 0; fi
-    $EDIT_PRIFILE http_proxy 127.0.0.1:8118
-    $EDIT_PRIFILE https_proxy 127.0.0.1:8118
+    ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
+    ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
     /usr/bin/privoxy --no-daemon /etc/privoxy/config &
 }
 
 off() {
     if [ "$PIDS" == "" ]; then echo "privoxy off, ok"; exit 0; fi
-    $EDIT_PRIFILE http_proxy ''
-    $EDIT_PRIFILE https_proxy ''
+    ~/scripts/edit-profile.sh http_proxy ''
+    ~/scripts/edit-profile.sh https_proxy ''
     killall privoxy &
 }
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 sleep 10
 xset -b

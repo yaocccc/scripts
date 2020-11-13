@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 print_privoxy(){
     PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`;

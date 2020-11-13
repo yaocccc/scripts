@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 gif_file=~/show.gif
 let x y w h
@@ -50,18 +50,23 @@ case $SCREEN_MODE in
     esac
 
 showTimer() {
-    let i1=$1 
-    let i2=$2
-    echo Starting record on $i1 seconds
+    i1=$1 i2=$2
+    arr=( "⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏" )
+    index=0
+
     while [ $i1 -ge 1 ]
     do
-        echo $i1
+        let index++
+        let index=index%10
+        printf " Starting record on %d seconds after %s \r" "$i1" "${arr[$index]}"
         let i1--
         sleep 1
     done
     while [ $i2 -ge 1 ]
     do
-        echo $i2
+        let index++
+        let index=index%10
+        printf " Recording %d %s \r" "$i2" "${arr[$index]}"
         let i2--
         sleep 1
     done
@@ -74,6 +79,5 @@ else
     cmd="-e "$cmd
 fi
 
-echo $x $y $w $h
 byzanz-record -x $x -y $y -w $w -h $h --delay=${wait_time-3} -d ${record_time-10} -v $gif_file $cmd
 sleep 1
