@@ -15,3 +15,7 @@ bluetoothctl power on &
 ~/scripts/set-privoxy.sh off &
 ~/scripts/set-screen.sh $sc &
 ~/scripts/autostart_wait.sh &
+
+sleep 10
+xset -b
+fcitx &
