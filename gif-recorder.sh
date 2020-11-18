@@ -34,8 +34,8 @@ case $SCREEN_MODE in
         ;;
     *)
         case $mode in
-            1) let x=$S1_X     y=$S1_Y     w=$S1_W    h=$S1_H ;;
-            2) let x=$S2_X     y=$S2_Y     w=$S2_W    h=$S2_H ;;
+            1) let x=$S1_X     y=$S1_Y     w=1440     h=900 ;;
+            2) let x=$S2_X     y=$S2_Y     w=1920     h=1080 ;;
             3) let x=$S2_X+475 y=$S2_Y+188 w=971      h=785 ;;
             4) let x=$S2_X+976 y=$S2_Y+34  w=937      h=513 ;;
             *)

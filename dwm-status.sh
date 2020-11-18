@@ -46,5 +46,5 @@ print_date(){
 while true
 do
     xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"
-	sleep 5
+    sleep 5
 done

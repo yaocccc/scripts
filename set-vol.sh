@@ -6,4 +6,5 @@ case $1 in
     toggle) /usr/bin/amixer set Master toggle ;;
 esac
 
-bash ~/scripts/dwm-status-refresh.sh
+killall dwm-status.sh
+~/scripts/dwm-status.sh
