@@ -5,7 +5,7 @@ test "`ip addr show | ag '192.168.2'`" != "" && sc=home
 test "`ip addr show | ag '192.168.1'`" != "" && sc=work
 
 ~/scripts/dwm-status.sh &
-picom --config ~/scripts/config/compton.conf
+picom --config ~/scripts/config/compton.conf &
 xautolock -time 10 -locker blurlock &
 nm-applet &
 electron-ssr &
