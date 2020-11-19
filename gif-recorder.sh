@@ -58,7 +58,7 @@ showTimer() {
     do
         let index++
         let index=index%10
-        printf " Starting record on %d seconds after %s \r" "$i1" "${arr[$index]}"
+        printf "Starting record on %2d seconds after %s \r" "$i1" "${arr[$index]}"
         let i1--
         sleep 1
     done
@@ -66,13 +66,13 @@ showTimer() {
     do
         let index++
         let index=index%10
-        printf " Recording %d %s \r" "$i2" "${arr[$index]}"
         let i2--
+        printf "Recording %2d %s \r" "$i2" "${arr[$index]}"
         sleep 1
     done
 }
 
-if [ "$cmd" == ""  ]; then
+if [ "$cmd" == "" ]; then
     showTimer ${wait_time-3} ${record_time-10} &
 else
     wait_time=0
