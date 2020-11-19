@@ -4,8 +4,7 @@ on() {
     off
     ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
     ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
-    # /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf &
-    /usr/bin/privoxy --no-daemon /etc/privoxy/config &
+    /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf &
 }
 
 off() {
