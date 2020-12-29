@@ -18,8 +18,8 @@ toggle() {
 }
 
 case $1 in
-    on) on > /dev/null ;;
-    off) off > /dev/null  ;;
-    toggle) toggle > /dev/null ;;
+    on) on ;;
+    off) off  ;;
+    toggle) toggle ;;
     *) toggle ;;
 esac

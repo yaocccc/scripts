@@ -36,7 +36,7 @@ case $SCREEN_MODE in
         case $mode in
             1) let x=$S1_X     y=$S1_Y     w=1440     h=900 ;;
             2) let x=$S2_X     y=$S2_Y     w=1920     h=1080 ;;
-            3) let x=$S2_X+475 y=$S2_Y+188 w=971      h=785 ;;
+            3) let x=$S2_X+478 y=$S2_Y+229 w=964      h=736 ;;
             4) let x=$S2_X+976 y=$S2_Y+34  w=937      h=513 ;;
             *)
                 echo 1: 内置屏幕-全屏
