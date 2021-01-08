@@ -29,4 +29,4 @@ case $1 in
     *) one ;;
 esac
 
-feh --randomize --bg-fill ~/Pictures/*
+feh --randomize --bg-fill ~/Pictures/*.png
