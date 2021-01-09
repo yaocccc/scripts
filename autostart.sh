@@ -9,7 +9,7 @@ xfce4-power-manager &
 bluetoothctl power on &
 /usr/lib/gsd-xsettings &
 ~/scripts/set-privoxy.sh off &
-~/scripts/set-screen.sh work &
+~/scripts/set-screen.sh &
 
 sleep 10
 xset -b
