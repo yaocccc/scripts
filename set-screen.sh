@@ -29,8 +29,7 @@ case $1 in
     copy) copy ;;
     one) one ;;
     *) 
-        test "`ip addr show | ag '192.168.2'`" != "" && home
-        test "`ip addr show | ag '192.168.1'`" != "" && work
+        test "`ip addr show | ag '192.168.2'`" != "" && home || work
         ;;
 esac
 
