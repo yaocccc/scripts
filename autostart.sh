@@ -10,6 +10,7 @@ bluetoothctl power on &
 /usr/lib/gsd-xsettings &
 ~/scripts/set-privoxy.sh off &
 ~/scripts/set-screen.sh &
+~/scripts/check-screen.sh &
 
 sleep 10
 xset -b
