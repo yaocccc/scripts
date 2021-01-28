@@ -15,6 +15,7 @@ case $1 in
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
     flameshot) flameshot gui ;;
+    vpn) sudo openfortivpn -c ~/scripts/config/vpn.conf -p $2 ;;
     screenkey)
         case $SCREEN_MODE in
             ONE) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
