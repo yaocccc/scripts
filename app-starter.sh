@@ -13,7 +13,6 @@ case $1 in
     tim) /opt/deepinwine/apps/Deepin-TIM/run.sh ;;
     wechat) wechat-uos ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
-    lark) cd ~/workspace/electron-lark && electron . ;;
     st) st ;;
     flameshot) flameshot gui ;;
     screenkey)
