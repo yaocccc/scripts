@@ -2,12 +2,12 @@
 
 print_privoxy(){
     PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`;
-    if [ "$PIDS" != "" ]; then echo "👓|"; fi
+    if [ "$PIDS" != "" ]; then echo "🔑|"; fi
 }
 
 print_cpu(){
     cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}');
-    echo "👽$cpuusage%";
+    echo "﯅$cpuusage%";
 }
 
 print_mem(){
@@ -28,8 +28,8 @@ print_alsa(){
 }
 
 print_bat(){
-    batpercent=$(expr $(acpi -b | awk '{print $4}' | grep -Eo "[0-9]+" | paste -sd+ | bc))
-    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ]; then chargesign=""; fi
+    batpercent=$(expr $(acpi -b | sed 2d | awk '{print $4}' | grep -Eo "[0-9]+"))
+    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ]; then chargesign="🔌"; fi
     if [ "$batpercent" -le 10 ]; then batsign="";
     elif [ "$batpercent" -le 25 ]; then batsign="";
     elif [ "$batpercent" -le 50 ]; then batsign="";

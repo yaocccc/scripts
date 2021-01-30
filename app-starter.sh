@@ -10,7 +10,7 @@ case $1 in
     music) kill -9 $(ps -u $USER -o pid,comm | grep 'netease-cloud-m' | awk '{print $1}') || netease-cloud-music ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
-    tim) /opt/deepinwine/apps/Deepin-TIM/run.sh ;;
+    tim) /opt/apps/com.qq.tim.spark/files/run.sh ;;
     wechat) wechat-uos ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
