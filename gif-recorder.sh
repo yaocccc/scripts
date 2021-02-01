@@ -1,4 +1,5 @@
 #! /bin/bash
+# gif录制脚本
 
 gif_file=~/show.gif
 let x y w h

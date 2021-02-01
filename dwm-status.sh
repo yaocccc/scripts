@@ -1,4 +1,5 @@
 #! /bin/bash
+# dwm状态栏刷新脚本
 
 print_privoxy(){
     PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`;
@@ -43,8 +44,4 @@ print_date(){
     echo "$date"
 }
 
-while true
-do
-    xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"
-    sleep 5
-done
+xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"

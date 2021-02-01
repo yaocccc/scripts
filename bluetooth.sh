@@ -1,4 +1,5 @@
 #! /bin/bash
+# 蓝牙连接脚本
 
 MOUSE1=F3:DF:74:53:B3:E2
 MOUSE2=34:88:5D:54:BC:7F

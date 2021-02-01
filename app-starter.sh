@@ -1,6 +1,59 @@
 #! /bin/bash
+# 命令调用脚本
 
 source ~/.profile
+
+sk() {
+    case $SCREEN_MODE in
+        ONE) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
+        COPY) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
+        HOME) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
+        WORK) killall screenkey || screenkey -p fixed -g 50%x8%+100%-11% & ;;
+    esac
+}
+
+timer() {
+    read -p "please input minutes: " min
+    read -p "please input note: " note
+    clear
+    echo $(date '+start at %H:%M - ') $note
+    for((time=min*60;time>0;time--))
+    do
+        a=$[$time/60]
+        b=$[$time%60]
+        printf "\r%02d:%02d " "$a" "$b"
+        sleep 1
+    done
+}
+
+blurlock() {
+    import -window root /tmp/screenshot.png
+    convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
+    rm /tmp/screenshot.png
+    i3lock -i /tmp/screenshotblur.png
+}
+
+toogle_privoxy() {
+    if [ "$http_proxy" == "" ]; then
+        ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
+        ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
+        /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf &
+        echo 'privoxy: on'
+    else
+        ~/scripts/edit-profile.sh http_proxy ''
+        ~/scripts/edit-profile.sh https_proxy ''
+        killall privoxy &
+        echo 'privoxy: off'
+    fi
+}
+
+set_vol() {
+    case $1 in
+        up) /usr/bin/amixer -qM set Master 5%+ umute ;;
+        down) /usr/bin/amixer -qM set Master 5%- umute ;;
+        toggle) /usr/bin/amixer set Master toggle ;;
+    esac
+}
 
 case $1 in
     pcmanfm) pcmanfm ;;
@@ -16,11 +69,8 @@ case $1 in
     st) st ;;
     flameshot) flameshot gui ;;
     vpn) sudo openfortivpn -c ~/scripts/config/vpn.conf -p $2 ;;
-    screenkey)
-        case $SCREEN_MODE in
-            ONE) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
-            HOME) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
-            WORK) killall screenkey || screenkey -p fixed -g 50%x8%+100%-11% & ;;
-        esac
-        ;;
+    screenkey) sk ;;
+    timer) timer ;;
+    toogle_privoxy) toogle_privoxy ;;
+    set_vol) set_vol $2 ;;
 esac
