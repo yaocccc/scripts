@@ -16,7 +16,7 @@ bluetoothctl power on &
 sleep 10
 xset -b
 fcitx &
-syndaemon &
+syndaemon -i 1 -t -K -R -d
 
 while true
 do
