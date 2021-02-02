@@ -53,6 +53,7 @@ set_vol() {
         down) /usr/bin/amixer -qM set Master 5%- umute ;;
         toggle) /usr/bin/amixer set Master toggle ;;
     esac
+    ~/scripts/dwm-status.sh
 }
 
 case $1 in
