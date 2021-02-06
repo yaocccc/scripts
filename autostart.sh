@@ -11,6 +11,7 @@
   启动 
     自动锁屏器
     窗口渲染器
+    通知管理器
     电源管理器
     wine环境依赖
     fcitx
@@ -25,6 +26,7 @@ syndaemon -i 1 -t -K -R -d
 
 xss-lock -- ~/scripts/app-starter.sh blurlock &
 picom --config ~/scripts/config/compton.conf &
+dunst -conf ~/scripts/config/dunst.conf &
 xfce4-power-manager &
 /usr/lib/gsd-xsettings &
 fcitx &

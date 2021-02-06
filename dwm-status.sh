@@ -2,7 +2,7 @@
 # dwm状态栏刷新脚本
 
 print_privoxy(){
-    PIDS=`ps -ef | grep privoxy | grep -v grep | grep -v set-privoxy | awk '{print $2}'`;
+    PIDS=`ps -ef | grep privoxy | grep -v grep | awk '{print $2}'`;
     if [ "$PIDS" != "" ]; then echo "🔑|"; fi
 }
 

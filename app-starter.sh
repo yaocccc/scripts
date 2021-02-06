@@ -12,20 +12,6 @@ sk() {
     esac
 }
 
-timer() {
-    read -p "please input minutes: " min
-    read -p "please input note: " note
-    clear
-    echo $(date '+start at %H:%M - ') $note
-    for((time=min*60;time>0;time--))
-    do
-        a=$[$time/60]
-        b=$[$time%60]
-        printf "\r%02d:%02d " "$a" "$b"
-        sleep 1
-    done
-}
-
 blurlock() {
     import -window root /tmp/screenshot.png
     convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
@@ -71,7 +57,8 @@ case $1 in
     flameshot) flameshot gui ;;
     vpn) sudo openfortivpn -c ~/scripts/config/vpn.conf -p $2 ;;
     screenkey) sk ;;
-    timer) timer ;;
     toogle_privoxy) toogle_privoxy ;;
+    electron-ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
+    *) $* ;;
 esac
