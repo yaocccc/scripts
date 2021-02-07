@@ -3,19 +3,28 @@
 
 print_privoxy(){
     PIDS=`ps -ef | grep privoxy | grep -v grep | awk '{print $2}'`;
-    if [ "$PIDS" != "" ]; then echo "🔑|"; fi
+    if [ "$PIDS" != "" ]; then echo "💡|"; fi
+}
+
+print_date(){
+    echo "🗓$(date '+%m-%d')"
+}
+
+print_time(){
+    clock_icons=("" "🕐" "🕑" "🕒" "🕓" "🕔" "🕕" "🕖" "🕗" "🕘" "🕙" "🕚" "🕛")
+    echo "${clock_icons[$(date '+%I')]}$(date '+%H:%M')"
 }
 
 print_cpu(){
     cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}');
-    echo "﯅$cpuusage%";
+    echo "🖥$cpuusage%";
 }
 
 print_mem(){
 	memavailable=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}');
 	memtotal=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}');
     memusedpercent=$[ ($memtotal - $memavailable) * 100 / $memtotal ];
-	echo "$memusedpercent%";
+	echo "🚀$memusedpercent%";
 }
 
 print_alsa(){
@@ -30,18 +39,9 @@ print_alsa(){
 
 print_bat(){
     batpercent=$(expr $(acpi -b | sed 2d | awk '{print $4}' | grep -Eo "[0-9]+"))
-    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ]; then chargesign="🔌"; fi
-    if [ "$batpercent" -le 10 ]; then batsign="";
-    elif [ "$batpercent" -le 25 ]; then batsign="";
-    elif [ "$batpercent" -le 50 ]; then batsign="";
-    elif [ "$batpercent" -le 95 ]; then batsign="";
-    else chargesign=""; batsign="☻"; fi
+    batsign="🔋";
+    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ] && [ "$batpercent" -le 95 ]; then chargesign="🔌"; fi
     echo "$chargesign$batsign$batpercent%"
 }
 
-print_date(){
-    date=$(date '+%m月%d日 %H点%M分')
-    echo "$date"
-}
-
-xsetroot -name "$(print_privoxy)$(print_date)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"
+xsetroot -name "$(print_privoxy)$(print_date)|$(print_time)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"

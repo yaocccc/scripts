@@ -34,8 +34,8 @@ nm-applet &
 flameshot &
 
 :<<!
-  每隔5秒   检查显示器链接情况 更新状态栏
-  每隔500秒 切换壁纸
+  每隔10秒   检查显示器链接情况 更新状态栏
+  每隔1000秒 切换壁纸
 !
 let check_time=0
 while true
@@ -44,5 +44,5 @@ do
     ~/scripts/dwm-status.sh &
     test $check_time = 0 && feh --randomize --bg-fill ~/Pictures/* && check_time=100
     check_time=$[$check_time-1]
-    sleep 5
+    sleep 10
 done
