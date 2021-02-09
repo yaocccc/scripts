@@ -12,7 +12,6 @@ xset s 600
 syndaemon -i 1 -t -K -R -d
 ~/scripts/set-privoxy.sh off &
 ~/scripts/set-screen.sh &
-~/scripts/dwm-status.sh &
 
 # 启动自动锁屏
 # 启动窗口渲染
@@ -22,7 +21,6 @@ syndaemon -i 1 -t -K -R -d
 # 启动网络托盘
 # 启动截图工具
 # 启动fcitx
-sleep 0.5
 xss-lock -- ~/scripts/app-starter.sh blurlock &
 picom --config ~/scripts/config/compton.conf &
 dunst -conf ~/scripts/config/dunst.conf &
@@ -37,9 +35,9 @@ fcitx &
 let check_time=0
 while true
 do
-    sleep 10
     ~/scripts/set-screen.sh check &
     ~/scripts/dwm-status.sh &
     test $check_time = 0 && feh --randomize --bg-fill ~/Pictures/* && check_time=100
     check_time=$[$check_time-1]
+    sleep 10
 done
