@@ -32,7 +32,7 @@ fcitx &
 
 # 每隔10秒   检查显示器链接情况 更新状态栏
 # 每隔1000秒 切换壁纸
-let check_time=0
+let check_time=100
 while true
 do
     ~/scripts/set-screen.sh check &

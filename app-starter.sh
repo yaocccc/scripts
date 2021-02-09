@@ -51,7 +51,7 @@ case $1 in
     pavucontrol) pavucontrol ;;
     postman) postman ;;
     tim) /opt/apps/com.qq.tim.spark/files/run.sh ;;
-    wechat) wechat-uos ;;
+    wechat) /opt/apps/com.qq.weixin.spark/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
     flameshot) flameshot gui ;;
