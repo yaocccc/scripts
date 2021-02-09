@@ -11,8 +11,11 @@ print_date(){
 }
 
 print_time(){
-    clock_icons=("" "🕐" "🕑" "🕒" "🕓" "🕔" "🕕" "🕖" "🕗" "🕘" "🕙" "🕚" "🕛")
-    echo "${clock_icons[$(date '+%I')]}$(date '+%H:%M')"
+    clock_icons=("🕛" "🕧" "🕐" "🕜" "🕑" "🕝" "🕒" "🕞" "🕓" "🕟" "🕔" "🕠" "🕕" "🕡" "🕖" "🕢" "🕗" "🕣" "🕘" "🕤" "🕙" "🕥" "🕚" "🕦" "🕛" "🕧")
+    hour=`date '+%l'`
+    minute=`date '+%M' | awk '{print int($0)}'`
+    if [ "$minute" -ge 30 ]; then hour=$((hour=2*hour+1)); else hour=$((hour=2*hour)); fi
+    echo "${clock_icons[$hour]}$(date '+%R')"
 }
 
 print_cpu(){
