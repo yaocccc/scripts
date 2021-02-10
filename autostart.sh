@@ -10,7 +10,7 @@
 xset -b
 xset s 600
 syndaemon -i 1 -t -K -R -d
-~/scripts/set-privoxy.sh off &
+~/scripts/app-starter.sh off_privoxy &
 ~/scripts/set-screen.sh &
 
 # 启动自动锁屏
@@ -30,14 +30,25 @@ nm-applet &
 flameshot &
 fcitx &
 
-# 每隔10秒   检查显示器链接情况 更新状态栏
-# 每隔1000秒 切换壁纸
-let check_time=100
-while true
-do
-    ~/scripts/set-screen.sh check &
-    ~/scripts/dwm-status.sh &
-    test $check_time = 0 && feh --randomize --bg-fill ~/Pictures/* && check_time=100
-    check_time=$[$check_time-1]
-    sleep 10
-done
+# 每隔10秒 检查显示器链接情况 更新状态栏
+every10s() {
+    while true
+    do
+        ~/scripts/set-screen.sh check &
+        ~/scripts/dwm-status.sh &
+        sleep 10
+    done
+}
+
+# 每隔1000秒 切换壁纸 更新天气
+every1000s() {
+    while true
+    do
+        feh --randomize --bg-fill ~/Pictures/* &
+        ~/scripts/edit-profile.sh weather $(curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g') &
+        sleep 1000
+    done
+}
+
+every10s &
+every1000s &

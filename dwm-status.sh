@@ -19,9 +19,13 @@ print_time(){
     echo "${clock_icons[$hour]}$(date '+%R')"
 }
 
+print_weather() {
+    echo "$weather"
+}
+
 print_cpu(){
     cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}');
-    echo "🖥$cpuusage%";
+    echo "🖥$cpuusage%"
 }
 
 print_mem(){
@@ -44,8 +48,8 @@ print_alsa(){
 print_bat(){
     batpercent=$(expr $(acpi -b | sed 2d | awk '{print $4}' | grep -Eo "[0-9]+"))
     batsign="🔋";
-    if [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ] && [ "$batpercent" -le 95 ]; then chargesign="🔌"; fi
+    if [ "$batpercent" -le 95 ] && [ "$(acpi -b | grep 'Battery 0' | grep Discharging)" == "" ]; then chargesign="🔌"; fi
     echo "$chargesign$batsign$batpercent%"
 }
 
-xsetroot -name "$(print_privoxy)$(print_date)|$(print_time)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"
+xsetroot -name "$(print_privoxy)$(print_date)|$(print_time)|$(print_weather)|$(print_cpu)|$(print_mem)|$(print_alsa)|$(print_bat)"

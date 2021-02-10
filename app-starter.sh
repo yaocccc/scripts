@@ -19,21 +19,27 @@ blurlock() {
     i3lock -i /tmp/screenshotblur.png
 }
 
-toogle_privoxy() {
-    if [ "$http_proxy" == "" ]; then
-        ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
-        ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
-        /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf >> /dev/null 2>&1 &
-        electron-ssr >> /dev/null 2>&1 &
-        notify-send "privoxy" "status: on"
-    else
-        ~/scripts/edit-profile.sh http_proxy ''
-        ~/scripts/edit-profile.sh https_proxy ''
-        killall privoxy &
-        kill -9 $(ps -u $USER -o pid,cmd | grep 'electron-ssr' | grep -v 'grep' | awk '{print $1}') &
-        notify-send "privoxy" "status: off"
-    fi
+on_privoxy() {
+    ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
+    ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
+    /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf >> /dev/null 2>&1 &
+    electron-ssr >> /dev/null 2>&1 &
+    notify-send "privoxy" "status: on"
     ~/scripts/dwm-status.sh
+}
+
+off_privoxy() {
+    ~/scripts/edit-profile.sh http_proxy ''
+    ~/scripts/edit-profile.sh https_proxy ''
+    killall privoxy &
+    kill -9 $(ps -u $USER -o pid,cmd | grep 'electron-ssr' | grep -v 'grep' | awk '{print $1}') &
+    notify-send "privoxy" "status: off"
+    ~/scripts/dwm-status.sh
+}
+
+toogle_privoxy() {
+    if [ "$http_proxy" == "" ]; then on_privoxy;
+    else off_privoxy; fi
 }
 
 set_vol() {
@@ -61,7 +67,8 @@ case $1 in
     vpn) sudo openfortivpn -c ~/scripts/config/vpn.conf -p $2 ;;
     screenkey) sk ;;
     toogle_privoxy) toogle_privoxy ;;
+    on_privoxy) on_privoxy ;;
+    off_privoxy) off_privoxy ;;
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
-    *) $* ;;
 esac
