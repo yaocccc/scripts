@@ -23,14 +23,17 @@ toogle_privoxy() {
     if [ "$http_proxy" == "" ]; then
         ~/scripts/edit-profile.sh http_proxy 127.0.0.1:8118
         ~/scripts/edit-profile.sh https_proxy 127.0.0.1:8118
-        /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf &
-        echo 'privoxy: on'
+        /usr/bin/privoxy --no-daemon ~/scripts/config/privoxy.conf >> /dev/null 2>&1 &
+        electron-ssr >> /dev/null 2>&1 &
+        notify-send "privoxy" "status: on"
     else
         ~/scripts/edit-profile.sh http_proxy ''
         ~/scripts/edit-profile.sh https_proxy ''
         killall privoxy &
-        echo 'privoxy: off'
+        kill -9 $(ps -u $USER -o pid,cmd | grep 'electron-ssr' | grep -v 'grep' | awk '{print $1}') &
+        notify-send "privoxy" "status: off"
     fi
+    ~/scripts/dwm-status.sh
 }
 
 set_vol() {
@@ -58,7 +61,7 @@ case $1 in
     vpn) sudo openfortivpn -c ~/scripts/config/vpn.conf -p $2 ;;
     screenkey) sk ;;
     toogle_privoxy) toogle_privoxy ;;
-    electron-ssr) electron-ssr ;;
+    ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
     *) $* ;;
 esac

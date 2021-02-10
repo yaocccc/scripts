@@ -1,9 +1,10 @@
 #! /bin/bash
 # dwm状态栏刷新脚本
 
+source ~/.profile
+
 print_privoxy(){
-    PIDS=`ps -ef | grep privoxy | grep -v grep | awk '{print $2}'`;
-    if [ "$PIDS" != "" ]; then echo "💡|"; fi
+    if [ "$http_proxy" != "" ]; then echo "💡|"; fi
 }
 
 print_date(){
