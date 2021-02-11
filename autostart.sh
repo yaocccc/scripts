@@ -45,7 +45,8 @@ every1000s() {
     while true
     do
         feh --randomize --bg-fill ~/Pictures/* &
-        ~/scripts/edit-profile.sh weather $(curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g') &
+        weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
+        test "$weather"!="" && ~/scripts/edit-profile.sh weather $weather
         sleep 1000
     done
 }
