@@ -21,6 +21,7 @@ syndaemon -i 1 -t -K -R -d
 # 启动网络托盘
 # 启动截图工具
 # 启动fcitx
+sleep 1
 xss-lock -- ~/scripts/app-starter.sh blurlock &
 picom --config ~/scripts/config/compton.conf &
 dunst -conf ~/scripts/config/dunst.conf &
@@ -46,7 +47,7 @@ every1000s() {
     do
         feh --randomize --bg-fill ~/Pictures/* &
         weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
-        test "$weather"!="" && ~/scripts/edit-profile.sh weather $weather
+        [ "$weather" ] && ~/scripts/edit-profile.sh weather $weather
         sleep 1000
     done
 }
