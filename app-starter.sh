@@ -38,8 +38,7 @@ off_privoxy() {
 }
 
 toogle_privoxy() {
-    if [ "$http_proxy" == "" ]; then on_privoxy;
-    else off_privoxy; fi
+    [ ! "$http_proxy" ] && on_privoxy || off_privoxy;
 }
 
 set_vol() {

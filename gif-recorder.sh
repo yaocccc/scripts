@@ -39,9 +39,6 @@ case $SCREEN_MODE in
         ;;
 esac
 
-if [ "$2" != "" ]; then
-    cmd="-e "$2
-fi
-
+[ "$2" ] && cmd="-e "$2;
 byzanz-record -x $x -y $y -w $w -h $h -v $gif_file $cmd
 sleep 1
