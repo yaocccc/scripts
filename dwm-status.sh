@@ -24,14 +24,14 @@ print_weather() {
 }
 
 print_cpu(){
-    cpuusage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}');
+    cpuusage=$(cat /proc/stat | sed -n '1p' | awk '{printf "%02d", $2 / $5 * 100}');
     echo "🖥$cpuusage%"
 }
 
 print_mem(){
 	memavailable=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}');
 	memtotal=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}');
-    memusedpercent=$[ ($memtotal - $memavailable) * 100 / $memtotal ];
+    memusedpercent=$(echo $[ ($memtotal - $memavailable) * 100 / $memtotal ] | awk '{printf "%02d", $1}');
 	echo "🚀$memusedpercent%";
 }
 
