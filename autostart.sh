@@ -18,18 +18,20 @@ syndaemon -i 1 -t -K -R -d
 # 启动网络托盘
 # 启动截图工具
 # 启动fcitx
-# 启动自动锁屏
-# 启动窗口渲染
-# 启动通知管理
 sleep 1
 xfce4-power-manager &
 /usr/lib/gsd-xsettings &
 nm-applet &
 flameshot &
 fcitx &
+
+# 启动自动锁屏
+# 启动通知管理
+# 启动窗口渲染
+sleep 1
 xss-lock -- ~/scripts/app-starter.sh blurlock &
-picom --config ~/scripts/config/compton.conf &
 dunst -conf ~/scripts/config/dunst.conf &
+picom --config ~/scripts/config/compton.conf &
 
 # 每隔10秒 检查显示器链接情况 更新状态栏
 every10s() {
