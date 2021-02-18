@@ -3,8 +3,6 @@
 
 source ~/.profile
 
-# pacmd list-sinks | grep $HEADPHONE -A 7 | sed -n '7p' | awk '{print $5}'
-
 print_others() {
     [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && headphone_status="🎧";
     [ "$http_proxy" ] && privoxy_status="💡";
