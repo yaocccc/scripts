@@ -42,10 +42,10 @@ toogle_privoxy() {
 }
 
 set_vol() {
+    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
     case $1 in
-        up) /usr/bin/amixer -qM set Master 5%+ umute ;;
-        down) /usr/bin/amixer -qM set Master 5%- umute ;;
-        toggle) /usr/bin/amixer set Master toggle ;;
+        up) pactl set-sink-volume $OUTPORT +5% ;;
+        down) pactl set-sink-volume $OUTPORT -5% ;;
     esac
     ~/scripts/dwm-status.sh
 }

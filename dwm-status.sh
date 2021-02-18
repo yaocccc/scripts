@@ -3,8 +3,10 @@
 
 source ~/.profile
 
+# pacmd list-sinks | grep $HEADPHONE -A 7 | sed -n '7p' | awk '{print $5}'
+
 print_others() {
-    [ "$(amixer cget numid=2 | grep 'on,on')" ] && headphone_status="🎧";
+    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && headphone_status="🎧";
     [ "$http_proxy" ] && privoxy_status="💡";
     others="$privoxy_status$headphone_status"
     [ "$others" ] && echo "$others|"
@@ -39,9 +41,10 @@ print_mem() {
 }
 
 print_alsa() {
-    vol=$(amixer get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/");
-    volstatus=$(amixer get Master | tail -n1 | sed -r "s/.*\[(.*)\]$/\1/");
-    if [ "$vol" -eq 0 ] || [ "$volstatus" == "off" ]; then vol="--"; volsign="🔇";
+    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
+    vol=$(pacmd list-sinks | grep $OUTPORT -A 7 | sed -n '7p' | awk '{printf int($5)}')
+    volunmuted=$(pacmd list-sinks | grep $OUTPORT -A 10 | grep 'muted: no')
+    if [ "$vol" -eq 0 ] || [ ! "$volunmuted" ]; then vol="--"; volsign="🔇";
     elif [ "$vol" -gt 0 ] && [ "$vol" -le 33 ]; then volsign="🔈";
     elif [ "$vol" -gt 33 ] && [ "$vol" -le 66 ]; then volsign="🔉";
     else volsign="🔊"; fi
