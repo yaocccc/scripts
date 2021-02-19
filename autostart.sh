@@ -15,12 +15,14 @@ syndaemon -i 1 -t -K -R -d
 
 # 启动电源管理
 # 启动wine依赖
+# 启动音频依赖
 # 启动网络托盘
 # 启动截图工具
 # 启动fcitx
 sleep 1
 xfce4-power-manager &
 /usr/lib/gsd-xsettings &
+pactl info &
 nm-applet &
 flameshot &
 fcitx &
@@ -47,6 +49,7 @@ every10s() {
 every1000s() {
     while true
     do
+        xset -b
         feh --randomize --bg-fill ~/Pictures/* &
         weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
         [ "$weather" ] && ~/scripts/edit-profile.sh weather $weather
