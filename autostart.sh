@@ -30,10 +30,12 @@ fcitx &
 # 启动自动锁屏
 # 启动通知管理
 # 启动窗口渲染
+# 启动键盘改建
 sleep 1
 xss-lock -- ~/scripts/app-starter.sh blurlock &
 dunst -conf ~/scripts/config/dunst.conf &
 picom --config ~/scripts/config/compton.conf &
+xmodmap ~/scripts/config/xmodmap.conf
 
 # 每隔10秒 检查显示器链接情况 更新状态栏
 every10s() {
