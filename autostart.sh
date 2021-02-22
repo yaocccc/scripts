@@ -1,13 +1,11 @@
 #! /bin/bash
 # DWM自启动脚本
 
-# 设置终端静音
 # 设置自动锁屏
 # 设置触控版
 # 设置代理关闭
 # 设置屏幕分辨率
 # 设置状态栏
-xset -b
 xset s 600
 syndaemon -i 1 -t -K -R -d
 ~/scripts/app-starter.sh off_privoxy &
@@ -30,12 +28,10 @@ fcitx &
 # 启动自动锁屏
 # 启动通知管理
 # 启动窗口渲染
-# 启动键盘改建
 sleep 1
 xss-lock -- ~/scripts/app-starter.sh blurlock &
 dunst -conf ~/scripts/config/dunst.conf &
 picom --config ~/scripts/config/compton.conf &
-xmodmap ~/scripts/config/xmodmap.conf
 
 # 每隔10秒 检查显示器链接情况 更新状态栏
 every10s() {
@@ -47,11 +43,16 @@ every10s() {
     done
 }
 
-# 每隔1000秒 切换壁纸 更新天气
+# 每隔1000秒
+# 设置终端静音
+# 启动键盘改建
+# 切换壁纸
+# 更新天气
 every1000s() {
     while true
     do
         xset -b
+        xmodmap ~/scripts/config/xmodmap.conf
         feh --randomize --bg-fill ~/Pictures/* &
         weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
         [ "$weather" ] && ~/scripts/edit-profile.sh weather $weather
