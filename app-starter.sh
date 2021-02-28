@@ -42,7 +42,7 @@ toogle_privoxy() {
 }
 
 set_vol() {
-    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
+    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
     case $1 in
         up) pactl set-sink-volume $OUTPORT +5% ;;
         down) pactl set-sink-volume $OUTPORT -5% ;;

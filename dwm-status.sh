@@ -39,7 +39,7 @@ print_mem() {
 }
 
 print_alsa() {
-    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
+    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
     vol=$(pacmd list-sinks | grep $OUTPORT -A 7 | sed -n '7p' | awk '{printf int($5)}')
     volunmuted=$(pacmd list-sinks | grep $OUTPORT -A 10 | grep 'muted: no')
     if [ "$vol" -eq 0 ] || [ ! "$volunmuted" ]; then vol="--"; volsign="🔇";

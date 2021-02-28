@@ -5,6 +5,7 @@ MOUSE1=F3:DF:74:53:B3:E2
 MOUSE2=34:88:5D:54:BC:7F
 KEYBOARD1=BF:52:04:01:1C:D2
 KEYBOARD2=3A:82:04:01:1D:26
+HEADPHONE=64:03:7F:7C:81:15
 HEADPHONE1=D8:55:75:12:AF:44
 HEADPHONE2=00:18:88:00:51:FB
 
@@ -20,7 +21,8 @@ case $1 in
     m2) bluetoothctl connect $MOUSE2;;
     k1) bluetoothctl connect $KEYBOARD1;;
     k2) bluetoothctl connect $KEYBOARD2;;
-    hp) bluetoothctl connect $HEADPHONE1;;
+    hp) bluetoothctl connect $HEADPHONE;;
+    hp1) bluetoothctl connect $HEADPHONE1;;
     hp2) bluetoothctl connect $HEADPHONE2;;
     *) ls ;;
 esac
