@@ -4,7 +4,7 @@
 source ~/.profile
 
 print_others() {
-    [ "$(bluetoothctl info D8:55:75:12:AF:44 | grep 'Connected: yes')" ] && headphone_status="🎧";
+    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && headphone_status="🎧";
     [ "$http_proxy" ] && privoxy_status="💡";
     others="$privoxy_status$headphone_status"
     [ "$others" ] && echo "$others|"
