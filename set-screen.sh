@@ -37,7 +37,7 @@ one() {
 }
 auto() {
     # [ "$(ip addr show | grep '192.168.2')" ] && home || work;
-    # 因为公司羡慕没有配显示器 暂时全部选择home模式
+    # 因为公司没有配显示器 暂时全部选择home模式
     home;
 }
 check() {
