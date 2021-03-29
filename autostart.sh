@@ -39,7 +39,8 @@ every1000s() {
         xmodmap ~/scripts/config/xmodmap.conf
         feh --randomize --bg-fill ~/Pictures/* &
         weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
-        [ ${#weather} -ge 10 ] && weather="🌈" && ~/scripts/edit-profile.sh weather "$weather"
+        [ ${#weather} -ge 10 ] && weather="🌈"
+        ~/scripts/edit-profile.sh weather "$weather"
         sleep 1000
     done
 }
