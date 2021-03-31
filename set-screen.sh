@@ -26,13 +26,13 @@ work() {
 }
 copy() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output eDP-1 --primary --mode 1440x900 --pos 0x0 --output $CONNECT_SCREEN --same-as eDP-1
+    xrandr --output eDP-1 --primary --mode 1440x900 --pos 0x0 --output $CONNECT_SCREEN --same-as eDP-1 --scale 0.75x0.8333
     ~/scripts/edit-profile.sh SCREEN_MODE COPY
     feh --randomize --bg-fill ~/Pictures/*.png
 }
 copy2() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output $CONNECT_SCREEN --primary --mode 1920x1080 --pos 0x0 --output eDP-1 --scale 1.335x1.2 --same-as $CONNECT_SCREEN
+    xrandr --output $CONNECT_SCREEN --primary --mode 1920x1080 --pos 0x0 --output eDP-1 --same-as $CONNECT_SCREEN --scale 1.3333x1.2111
     ~/scripts/edit-profile.sh SCREEN_MODE COPY
     feh --randomize --bg-fill ~/Pictures/*.png
 }
