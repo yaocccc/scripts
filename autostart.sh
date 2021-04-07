@@ -5,6 +5,7 @@ settings() {
     [ $1 ] && sleep $1
 
     xset s 600
+    xset -b
     syndaemon -i 1 -t -K -R -d
     xss-lock -- ~/scripts/app-starter.sh blurlock &
     ~/scripts/app-starter.sh off_privoxy &
@@ -41,13 +42,15 @@ every1000s() {
 
     while true
     do
-        xset -b
         xmodmap ~/scripts/config/xmodmap.conf
-        feh --randomize --bg-fill ~/Pictures/* &
         weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
         [ ! $weather ] || [ ${#weather} -ge 20 ] && weather="🌈"
         ~/scripts/edit-profile.sh weather "$weather"
+
         sleep 1000
+
+        xset -b
+        feh --randomize --bg-fill ~/Pictures/* &
     done
 }
 

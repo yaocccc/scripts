@@ -4,6 +4,7 @@
   home: 外接显示器在左边
   work: 外接显示器在右边
   copy: 复制显示器
+  copy2: 复制显示器
   one: 单笔记本显示器
   auto: 根据内网ip自动选择是home还是work
   check: 检测显示器连接状态是否发生变化 -> 调用auto
