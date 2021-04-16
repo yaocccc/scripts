@@ -50,7 +50,7 @@ every1000s() {
         sleep 1000
 
         xset -b
-        feh --randomize --bg-fill ~/Pictures/* &
+        feh --randomize --bg-fill ~/Pictures/*.png &
     done
 }
 
