@@ -47,6 +47,10 @@ every1000s() {
         [ ! $weather ] || [ ${#weather} -ge 20 ] && weather="🌈"
         ~/scripts/edit-profile.sh weather "$weather"
 
+        mail_count=`fetchmail -k | wc -l`
+        mail_count=$(($mail_count-1))
+        [ "$mail_count" -gt 0 ] && notify-send "💬有"$mail_count"条新邮件"
+
         sleep 1000
 
         xset -b
