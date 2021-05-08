@@ -11,7 +11,7 @@ print_others() {
 }
 
 print_mail() {
-    mailcount=`ls ~/Mail/inbox/cur | wc -w`
+    mailcount=`ls ~/Mail/inbox/new | wc -w`
     [ "$mailcount" -gt 0 ] && echo "💬$mailcount|"
 }
 
