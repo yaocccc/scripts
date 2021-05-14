@@ -70,4 +70,6 @@ case $1 in
     off_privoxy) off_privoxy ;;
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
+    clock) ~/scripts/lib/st -e tty-clock -csDC 7 & ;;
+    surf) /usr/local/bin/surf $2 & ;;
 esac
