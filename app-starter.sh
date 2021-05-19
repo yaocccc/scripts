@@ -71,5 +71,5 @@ case $1 in
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
     clock) ~/scripts/lib/st -e tty-clock -csDC 7 & ;;
-    surf) /usr/local/bin/surf $2 & ;;
+    surf) /usr/local/bin/surf $2 >> /dev/null 2>&1 & ;;
 esac
