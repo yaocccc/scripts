@@ -1,46 +1,58 @@
 #! /bin/bash
 :<<!
   设置屏幕分辨率的脚本
-  home: 外接显示器在左边
-  work: 外接显示器在右边
-  copy: 复制显示器
-  copy2: 复制显示器
-  one: 单笔记本显示器
-  auto: 根据内网ip自动选择是home还是work
-  check: 检测显示器连接状态是否发生变化 -> 调用auto
+  home: OUT - INNER
+  work: INNER - OUT
+  copy: INNER - INNER
+  copy2: OUT - OUT
+  one: INNER
+  auto: 根据内网ip -> home 还是 work
+  check: 检测显示器连接状态是否变化 -> 调用auto
 !
 
+INNER_SCREEN=eDP-1
+OUT1_SCREEN=DP-1
+OUt2_SCREEN=DP-2
 CONNECT_SCREEN=$(xrandr | grep DP | grep -v eDP | grep ' connected ' | awk '{print $1}')
 DISCONNECT_SCREEN=$(xrandr | grep DP | grep -v eDP | grep ' disconnected ' | awk '{print $1}')
 
+_post() {
+    ~/scripts/edit-profile.sh SCREEN_MODE $1
+    feh --randomize --bg-fill ~/Pictures/*.png
+}
 home() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output eDP-1 --mode 1440x900 --pos 1920x325 --output $DISCONNECT_SCREEN --off --output $CONNECT_SCREEN --primary --mode 1920x1080 --pos 0x0
+    xrandr --output $INNER_SCREEN   --mode 1440x900  --pos 1920x325 --scale 1x1 \
+           --output $CONNECT_SCREEN --mode 1920x1080 --pos 0x0      --scale 1x1 --primary \
+           --output $DISCONNECT_SCREEN --off
     ~/scripts/edit-profile.sh SCREEN_MODE HOME
     feh --randomize --bg-fill ~/Pictures/*.png
+    _post HOME
 }
 work() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output eDP-1 --mode 1440x900 --pos 0x525 --output $DISCONNECT_SCREEN --off --output $CONNECT_SCREEN --primary --mode 1920x1080 --pos 1440x0
-    ~/scripts/edit-profile.sh SCREEN_MODE WORK
-    feh --randomize --bg-fill ~/Pictures/*.png
+    xrandr --output $INNER_SCREEN   --mode 1440x900  --pos 0x525  --scale 1x1 \
+           --output $CONNECT_SCREEN --mode 1920x1080 --pos 1440x0 --scale 1x1 --primary\
+           --output $DISCONNECT_SCREEN --off
+    _post WORK
 }
 copy() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output eDP-1 --primary --mode 1440x900 --pos 0x0 --output $CONNECT_SCREEN --same-as eDP-1 --scale 0.75x0.8333
-    ~/scripts/edit-profile.sh SCREEN_MODE COPY
-    feh --randomize --bg-fill ~/Pictures/*.png
+    xrandr --output $INNER_SCREEN   --mode 1440x900 --pos 0x0 --scale 1x1 --primary \
+           --output $CONNECT_SCREEN --same-as $INNER_SCREEN   --scale 0.75x0.8333
+    _post COPY
 }
 copy2() {
     [ ! "$CONNECT_SCREEN" ] && one && return;
-    xrandr --output $CONNECT_SCREEN --primary --mode 1920x1080 --pos 0x0 --output eDP-1 --same-as $CONNECT_SCREEN --scale 1.3333x1.2111
-    ~/scripts/edit-profile.sh SCREEN_MODE COPY
-    feh --randomize --bg-fill ~/Pictures/*.png
+    xrandr --output $CONNECT_SCREEN --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
+           --output $INNER_SCREEN   --same-as $CONNECT_SCREEN  --scale 1.3333x1.2111
+    _post COPY
 }
 one() {
-    xrandr --output eDP-1 --primary --mode 1440x900 --pos 0x0 --output DP-1 --off --output DP-2 --off
-    ~/scripts/edit-profile.sh SCREEN_MODE ONE
-    feh --randomize --bg-fill ~/Pictures/*.png
+    xrandr --output $INNER_SCREEN --mode 1440x900 --pos 0x0 --scale 1x1  --primary  \
+           --output $OUT1_SCREEN --off \
+           --output $OUt2_SCREEN --off
+    _post ONE
 }
 auto() {
     # [ "$(ip addr show | grep '192.168.2')" ] && home || work;
