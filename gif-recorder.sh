@@ -62,6 +62,6 @@ case $SCREEN_MODE in
 esac
 
 [ "$2" ] \
-    && byzanz-record -x $x -y $y -w $w -h $h -v $gif_file --exec="$2 $3 $4 $5" \
+    && byzanz-record -x $x -y $y -w $w -h $h -v $gif_file --exec="$2 $3 $4 $5 $6 $7 $8 $9 $10" \
     || byzanz-record -x $x -y $y -w $w -h $h -v $gif_file
 sleep 1
