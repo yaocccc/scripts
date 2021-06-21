@@ -55,7 +55,8 @@ case $1 in
     rofi) rofi -show run ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
-    music) kill -9 $(ps -u $USER -o pid,comm | grep 'netease-cloud-m' | awk '{print $1}') || netease-cloud-music ;;
+    # music) kill -9 $(ps -u $USER -o pid,comm | grep 'netease-cloud-m' | awk '{print $1}') || netease-cloud-music ;;
+    music) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
     tim) /opt/apps/com.qq.tim.spark/files/run.sh ;;

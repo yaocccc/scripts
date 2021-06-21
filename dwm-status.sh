@@ -28,7 +28,7 @@ print_time() {
 }
 
 print_weather() {
-    echo "$weather|"
+    [ "$weather" ] && echo "$weather|"
 }
 
 print_cpu() {

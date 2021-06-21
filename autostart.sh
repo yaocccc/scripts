@@ -47,11 +47,11 @@ every1000s() {
         fetchmail -k &
 
         i=0
-        weather="🌈"
-        while [ $i -lt 3 ] && [ $weather = "🌈" ]
+        weather=
+        while [ $i -lt 3 ] && [ !$weather ]
         do
             weather=`curl -sf 'wttr.in/ShangHai?format=1' | sed 's/ \|+//g'`
-            [ ! $weather ] || [ ${#weather} -ge 20 ] && weather="🌈" && sleep 10
+            [ ! $weather ] || [ ${#weather} -ge 20 ] && weather= && sleep 10
             i=$(($i+1))
         done
         ~/scripts/edit-profile.sh weather "$weather"

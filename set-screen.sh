@@ -52,6 +52,13 @@ one() {
            --output $OUt2_SCREEN --off
     _post ONE
 }
+one2() {
+    xrandr --output $INNER_SCREEN   --off \
+           --output $CONNECT_SCREEN --mode 1920x1080 --pos 0x0      --scale 1x1 --primary \
+           --output $DISCONNECT_SCREEN --off
+    _post HOME
+    _post ONE
+}
 auto() {
     # [ "$(ip addr show | grep '192.168.2')" ] && home || work;
     # 公司和家里电脑方式暂时是一样的 先保留
@@ -69,6 +76,7 @@ case $1 in
     copy) copy ;;
     copy2) copy2 ;;
     one) one ;;
+    one2) one2 ;;
     check) check ;;
     *) auto ;;
 esac
