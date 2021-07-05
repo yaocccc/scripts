@@ -58,7 +58,7 @@ every1000s() {
 
         sleep 1000
 
-        feh --randomize --bg-fill ~/Pictures/*.png &
+        # feh --randomize --bg-fill ~/Pictures/*.png &
     done
 }
 

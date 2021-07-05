@@ -6,9 +6,7 @@ source ~/.profile
 sk() {
     case $SCREEN_MODE in
         ONE) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
-        COPY) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
-        HOME) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
-        WORK) killall screenkey || screenkey -p fixed -g 50%x8%+100%-11% & ;;
+        TWO) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
     esac
 }
 
@@ -55,7 +53,6 @@ case $1 in
     rofi) rofi -show run ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
-    # music) kill -9 $(ps -u $USER -o pid,comm | grep 'netease-cloud-m' | awk '{print $1}') || netease-cloud-music ;;
     music) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;

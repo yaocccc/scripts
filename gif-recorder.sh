@@ -22,9 +22,8 @@ getregion() {
 }
 
 case $SCREEN_MODE in
-    HOME) S1_X=1920 S1_Y=325 S2_X=0 S2_Y=0 ;;
-    WORK) S1_X=0 S1_Y=525 S2_X=1440 S2_Y=0 ;;
     ONE) S1_X=0 S1_Y=0 ;;
+    TWO) S1_X=1920 S1_Y=325 S2_X=0 S2_Y=0 ;;
     *) exit ;;
 esac
 
