@@ -12,7 +12,7 @@ set_wallpaper() {
     killall mpv
     killall xwinwrap
     sleep 0.2
-    xwinwrap -fs -nf -ov -- mpv -wid WID --loop --no-osc --no-osd-bar --input-vo-keyboard=no --really-quiet $1 >> /dev/null 2>&1 &
+    xwinwrap -fs -nf -ov -- mpv -wid WID --loop --no-osc --no-osd-bar --input-vo-keyboard=no --really-quiet --no-stop-screensaver $1 >> /dev/null 2>&1 &
 }
 
 rand=$((RANDOM % 9 + 1))
