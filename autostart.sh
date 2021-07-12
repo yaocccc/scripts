@@ -57,8 +57,6 @@ every1000s() {
         ~/scripts/edit-profile.sh weather "$weather"
 
         sleep 1000
-
-        # feh --randomize --bg-fill ~/Pictures/*.png &
     done
 }
 
