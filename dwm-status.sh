@@ -5,6 +5,7 @@ source ~/.profile
 
 print_others() {
     [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && headphone_status="🎧"
+    [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && headphone_status="🎧"
     [ "$http_proxy" ] && privoxy_status="💡"
     others="$privoxy_status$headphone_status"
     [ "$others" ] && echo "$others|"
@@ -44,7 +45,9 @@ print_mem() {
 }
 
 print_alsa() {
-    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE || OUTPORT=$SPEAKER
+    OUTPORT=$SPEAKER
+    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && OUTPORT=$HEADPHONE
+    [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && OUTPORT=$VOICEBOX
     vol=$(pacmd list-sinks | grep $OUTPORT -A 7 | sed -n '7p' | awk '{printf int($5)}')
     volunmuted=$(pacmd list-sinks | grep $OUTPORT -A 10 | grep 'muted: no')
     if [ "$vol" -eq 0 ] || [ ! "$volunmuted" ]; then vol="--"; volsign="🔇";
