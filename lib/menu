@@ -1,0 +1,64 @@
+###############################################
+
+key=''
+_echo_green() { echo -e "\033[32m$1\033[0m"; }
+_get_char() { SAVEDSTTY=`stty -g`; stty -echo; stty raw; dd if=/dev/tty bs=1 count=1 2> /dev/null; stty -raw; stty echo; stty $SAVEDSTTY; }
+_list() {
+    text=''
+    for tab in ${menu_tabs[@]}; do
+        test ${tab} = ${menu_tabs[$tab_index]} && text=$text' \033[32m'$tab'\033[0m'  || text=$text' '$tab
+    done
+    echo -e $text
+
+    for item in ${menu_items[@]}; do
+        test ${item} = ${menu_items[$item_index]} && _echo_green " > ${item}" || echo "   ${item}"
+    done
+}
+_key() {
+    # 计算新的tab_index
+    tab_index=$(($tab_index+$1))
+    len=${#menu_tabs[*]}
+    test $tab_index -lt 0 && tab_index=$((len - 1))
+    test $tab_index -gt $((len - 1)) && tab_index=0
+
+    # 计算新的item_index
+    item_index=$(($item_index+$2))
+    len=${#menu_items[*]}
+    test $item_index -lt 0 && item_index=$((len - 1))
+    test $item_index -gt $((len - 1)) && item_index=0
+
+    clear
+
+    pre_hook
+    _list
+    after_hook
+}
+
+###############################################
+
+function pre_hook() { :; }
+function after_hook() { :; }
+menu_tabs=()
+menu_items=()
+
+# 调用menu方法展开菜单
+# 上下左右移动tab或item，回车选中 q Q ctrl-c 退出脚本
+menu() {
+    _key 0 0
+    while :; do
+        key=`_get_char`
+        case "$key" in
+            'q'|'Q'|'') exit 1 ;;
+            '') break ;;
+            '')
+                secondchar=`_get_char`
+                thirdchar=`_get_char`
+                case "$thirdchar" in
+                    A) _key 0 -1 ;;
+                    B) _key 0 1 ;;
+                    D) _key -1 0 ;;
+                    C) _key 1 0 ;;
+                esac ;;
+        esac
+    done
+}
