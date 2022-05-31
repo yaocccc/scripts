@@ -17,16 +17,16 @@ color07="#334466^"
 color08="#553388^"
 color09="#CCCCCC^"
 
-  coin_color="$s2d_fg$color00$s2d_bg$color02"
-   cpu_color="$s2d_fg$color00$s2d_bg$color06"
- d_cpu_color="$s2d_fg$color09$s2d_bg$color06"
-   mem_color="$s2d_fg$color05$s2d_bg$color07"
- d_mem_color="$s2d_fg$color09$s2d_bg$color07"
-  mail_color="$s2d_fg$color03$s2d_bg$color02"
-  time_color="$s2d_fg$color00$s2d_bg$color06"
-   vol_color="$s2d_fg$color08$s2d_bg$color07"
-   bat_color="$s2d_fg$color00$s2d_bg$color02"
-others_color="$s2d_fg$color04$s2d_bg$color06"
+   coin_color="$s2d_fg$color00$s2d_bg$color02"
+    cpu_color="$s2d_fg$color00$s2d_bg$color06"
+  d_cpu_color="$s2d_fg$color09$s2d_bg$color06"
+    mem_color="$s2d_fg$color05$s2d_bg$color07"
+  d_mem_color="$s2d_fg$color09$s2d_bg$color07"
+weather_color="$s2d_fg$color03$s2d_bg$color02"
+   time_color="$s2d_fg$color00$s2d_bg$color06"
+    vol_color="$s2d_fg$color08$s2d_bg$color07"
+    bat_color="$s2d_fg$color00$s2d_bg$color02"
+ others_color="$s2d_fg$color04$s2d_bg$color06"
 
 print_cpu() {
     cpu_icon=""
@@ -80,21 +80,13 @@ print_mem() {
     printf "%s%s%s" "$color1" "$text3" "$s2d_reset"
 }
 
-print_coins() {
-    text=" ﴑ:$BTC ﲹ:$ETH :$BNB "
-    color=$coin_color
-    # printf "%s%s%s" "$color" "$text" "$s2d_reset"
-}
-
-print_mail() {
-    mail_text="$(ls ~/Mail/inbox/new | wc -w)"
-    if  [ "$mail_text" -gt 0 ]; then
-        mail_icon=""
-
-        text=" $mail_icon $mail_text "
-        color=$mail_color
-        printf "%s%s%s" "$color" "$text" "$s2d_reset"
-    fi
+print_weather() {
+    color=$weather_color
+    text=""
+    [ "$SH_WEATHER" ]   && [ "$WZ_WEATHER" ]   && text=" $SH_WEATHER $WZ_WEATHER "
+    [ "$SH_WEATHER" ]   && [ ! "$WZ_WEATHER" ] && text=" $SH_WEATHER -- "
+    [ ! "$SH_WEATHER" ] && [ "$WZ_WEATHER" ]   && text=" -- $WZ_WEATHER"
+    [ "$text" ] && printf "%s%s%s" "$color" "$text" "$s2d_reset"
 }
 
 print_time() {
@@ -174,4 +166,4 @@ print_others() {
     fi
 }
 
-xsetroot -name "$(print_coins)$(print_cpu)$(print_mem)$(print_mail)$(print_time)$(print_vol)$(print_bat)$(print_others)"
+xsetroot -name "$(print_cpu)$(print_mem)$(print_weather)$(print_time)$(print_vol)$(print_bat)$(print_others)"

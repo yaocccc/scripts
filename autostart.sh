@@ -39,12 +39,6 @@ every300s() {
     [ $1 ] && sleep $1
     while true
     do
-        BTC=`curl -g 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT' | jq -r '.price' | awk '{printf "%d", $1 }'`
-        ETH=`curl -g 'https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT' | jq -r '.price' | awk '{printf "%d", $1 }'`
-        BNB=`curl -g 'https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT' | jq -r '.price' | awk '{printf "%d", $1 }'`
-        [ "$BTC" -gt 0 ] && ~/scripts/edit-profile.sh BTC $BTC
-        [ "$ETH" -gt 0 ] && ~/scripts/edit-profile.sh ETH $ETH
-        [ "$BNB" -gt 0 ] && ~/scripts/edit-profile.sh BNB $BNB
         ~/scripts/dwm-status.sh &
         sleep 300
     done
@@ -57,10 +51,12 @@ every1000s() {
         source ~/.profile
         xset -b
         xmodmap ~/scripts/config/xmodmap.conf
-        fetchmail -k
-        notify-send "$(date '+%Y-%m-%d')" "$(curl 'wttr.in/ShangHai?format=3')\n$(curl 'wttr.in/WenZhou?format=3')" &
-        mailcount=`ls ~/Mail/inbox/new | wc -w`
-        [ "$mailcount" -gt 0 ] && notify-send "📧 NEW MAIL: ${mailcount}" -u low
+        SH_WEATHER=`curl 'wttr.in/ShangHai?format=1' | sed 's/ //' | sed 's/+//'`
+        WZ_WEATHER=`curl 'wttr.in/WenZhou?format=1'  | sed 's/ //' | sed 's/+//'`
+        [ "$SH_WEATHER[-2,-1]" != "°C" ] && SH_WEATHER=""
+        [ "$WZ_WEATHER[-2,-1]" != "°C" ] && WZ_WEATHER=""
+        ~/scripts/edit-profile.sh SH_WEATHER "'"$SH_WEATHER"'"
+        ~/scripts/edit-profile.sh WZ_WEATHER "'"$WZ_WEATHER"'"
         sleep 1000
         [ "$WALLPAPER_MODE" = "PIC" ] && ~/scripts/set-wallpaper.sh &
     done

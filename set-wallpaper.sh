@@ -10,7 +10,7 @@ killall xwinwrap >> /dev/null 2>&1
 
 case $WALLPAPER_MODE in
     PIC)
-        feh --randomize --bg-fill ~/Pictures/*.png
+        feh --randomize --bg-fill ~/Pictures/002/*.png
         ;;
     MP4)
         sleep 0.2

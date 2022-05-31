@@ -30,6 +30,14 @@ set_vol() {
     ~/scripts/dwm-status.sh
 }
 
+toggle_hp_sink() {
+    a2dp=`pactl list | grep Active | grep a2dp`
+    card=`pactl list | grep "Name: bluez_card." | cut -d ' ' -f 2`
+    [ ! "$card" ] && exit 0
+    [ -n "$a2dp" ] && pactl set-card-profile $card headset-head-unit-msbc || pactl set-card-profile $card a2dp-sink
+    [ -n "$a2dp" ] && notify-send "$card to headset-head-unit-msbc" || notify-send "$card to a2dp-sink"
+}
+
 close_music() {
     ncmpcpp_pid=`ps -u $USER -o pid,comm | grep 'ncmpcpp' | awk '{print $1}'`
     mpd_pid=`ps -u $USER -o pid,comm | grep 'mpd' | awk '{print $1}'`
@@ -82,7 +90,10 @@ case $1 in
     music) close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp') ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
-    tim) /opt/apps/com.qq.tim.spark/files/run.sh ;;
+    tim)
+        sudo -S sysctl -w net.ipv6.conf.all.disable_ipv6=1
+        /opt/apps/com.qq.tim.spark/files/run.sh
+        ;;
     wechat) /opt/apps/com.qq.weixin.deepin/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
@@ -92,6 +103,7 @@ case $1 in
     screenkey) sk ;;
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
+    toggle_hp_sink) toggle_hp_sink ;;
     surf) /usr/local/bin/surf $2 >> /dev/null 2>&1 & ;;
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
     telegram) telegram-desktop ;;
