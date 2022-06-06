@@ -21,6 +21,8 @@ set_vol() {
     OUTPORT=$SPEAKER
     [ "$(pactl list sinks | grep $HEADPHONE_A2DP)" ] && OUTPORT=$HEADPHONE_A2DP
     [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP)" ] && OUTPORT=$HEADPHONE_HSP_HFP
+    [ "$(pactl list sinks | grep $HEADPHONE_A2DP_SONY)" ] && OUTPORT=$HEADPHONE_A2DP_SONY
+    [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP_SONY)" ] && OUTPORT=$HEADPHONE_HSP_HFP_SONY
     [ "$(pactl list sinks | grep $VOICEBOX)" ] && OUTPORT=$VOICEBOX
 
     case $1 in
@@ -113,7 +115,7 @@ case $1 in
         sleep 2 && firefox >> /dev/null 2>&1 &
         sleep 3 && microsoft-edge-stable >> /dev/null 2>&1 &
         ;;
-    robot)
-        kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot > ~/log ;;
+    robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot > ~/log ;;
     gologin) ~/scripts/lib/gologin $2 >> /dev/null 2>&1 & ;;
+    weather) notify-send "$(date '+%Y-%m-%d')" "$(curl 'wttr.in/ShangHai?format=3')\n$(curl 'wttr.in/WenZhou?format=3')" >> /dev/null 2>&1 & ;;
 esac

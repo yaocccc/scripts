@@ -51,12 +51,6 @@ every1000s() {
         source ~/.profile
         xset -b
         xmodmap ~/scripts/config/xmodmap.conf
-        SH_WEATHER=`curl 'wttr.in/ShangHai?format=1' | sed 's/ //' | sed 's/+//'`
-        WZ_WEATHER=`curl 'wttr.in/WenZhou?format=1'  | sed 's/ //' | sed 's/+//'`
-        [ "$SH_WEATHER[-2,-1]" != "°C" ] && SH_WEATHER=""
-        [ "$WZ_WEATHER[-2,-1]" != "°C" ] && WZ_WEATHER=""
-        ~/scripts/edit-profile.sh SH_WEATHER "'"$SH_WEATHER"'"
-        ~/scripts/edit-profile.sh WZ_WEATHER "'"$WZ_WEATHER"'"
         sleep 1000
         [ "$WALLPAPER_MODE" = "PIC" ] && ~/scripts/set-wallpaper.sh &
     done

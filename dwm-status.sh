@@ -22,7 +22,6 @@ color09="#CCCCCC^"
   d_cpu_color="$s2d_fg$color09$s2d_bg$color06"
     mem_color="$s2d_fg$color05$s2d_bg$color07"
   d_mem_color="$s2d_fg$color09$s2d_bg$color07"
-weather_color="$s2d_fg$color03$s2d_bg$color02"
    time_color="$s2d_fg$color00$s2d_bg$color06"
     vol_color="$s2d_fg$color08$s2d_bg$color07"
     bat_color="$s2d_fg$color00$s2d_bg$color02"
@@ -80,15 +79,6 @@ print_mem() {
     printf "%s%s%s" "$color1" "$text3" "$s2d_reset"
 }
 
-print_weather() {
-    color=$weather_color
-    text=""
-    [ "$SH_WEATHER" ]   && [ "$WZ_WEATHER" ]   && text=" $SH_WEATHER $WZ_WEATHER "
-    [ "$SH_WEATHER" ]   && [ ! "$WZ_WEATHER" ] && text=" $SH_WEATHER -- "
-    [ ! "$SH_WEATHER" ] && [ "$WZ_WEATHER" ]   && text=" -- $WZ_WEATHER"
-    [ "$text" ] && printf "%s%s%s" "$color" "$text" "$s2d_reset"
-}
-
 print_time() {
     time_text="$(date '+%m/%d %H:%M')"
     case "$(date '+%I')" in
@@ -115,6 +105,8 @@ print_vol() {
     OUTPORT=$SPEAKER
     [ "$(pactl list sinks | grep $HEADPHONE_A2DP)" ] && OUTPORT=$HEADPHONE_A2DP
     [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP)" ] && OUTPORT=$HEADPHONE_HSP_HFP
+    [ "$(pactl list sinks | grep $HEADPHONE_A2DP_SONY)" ] && OUTPORT=$HEADPHONE_A2DP_SONY
+    [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP_SONY)" ] && OUTPORT=$HEADPHONE_HSP_HFP_SONY
     [ "$(pactl list sinks | grep $VOICEBOX)" ] && OUTPORT=$VOICEBOX
     volunmuted=$(pactl list sinks | grep $OUTPORT -A 10 | grep 'Mute: no')
     vol_text=$(pactl list sinks | grep $OUTPORT -A 8 | sed -n '8p' | awk '{printf int($5)}')
@@ -166,4 +158,4 @@ print_others() {
     fi
 }
 
-xsetroot -name "$(print_cpu)$(print_mem)$(print_weather)$(print_time)$(print_vol)$(print_bat)$(print_others)"
+xsetroot -name "$(print_cpu)$(print_mem)$(print_time)$(print_vol)$(print_bat)$(print_others)"
