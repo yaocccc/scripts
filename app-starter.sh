@@ -84,7 +84,7 @@ st_geometry() {
 }
 
 case $1 in
-    filemanager) dolphin ;;
+    filemanager) pcmanfm ;;
     rofi) rofi -show run ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
