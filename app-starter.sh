@@ -118,4 +118,5 @@ case $1 in
     robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot > ~/log ;;
     gologin) ~/scripts/lib/gologin $2 >> /dev/null 2>&1 & ;;
     weather) notify-send "$(date '+%Y-%m-%d')" "$(curl 'wttr.in/ShangHai?format=3')\n$(curl 'wttr.in/WenZhou?format=3')" >> /dev/null 2>&1 & ;;
+    picom) picom --config ~/scripts/config/compton.conf $2 >> /dev/null 2>&1 & ;;
 esac

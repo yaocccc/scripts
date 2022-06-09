@@ -21,7 +21,7 @@ daemons() {
     ~/scripts/wine-notify.sh &
     dunst -conf ~/scripts/config/dunst.conf &
     lemonade server &
-    sleep 1 && picom --config ~/scripts/config/compton.conf &
+    sleep 1 && ~/scripts/app-starter.sh picom
     # sleep 10 && docker restart v2raya # 自启动v2raya翻墙
 }
 
