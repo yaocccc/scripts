@@ -31,8 +31,8 @@ one() {
 }
 check() {
     source ~/.profile
-    # [ "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" == "ONE" ] && two;
-    # [ ! "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" != "ONE" ] && two;
+    [ "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" == "ONE" ] && two;
+    [ ! "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" != "ONE" ] && two;
 }
 
 case $1 in
