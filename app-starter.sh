@@ -110,15 +110,8 @@ case $1 in
     surf) /usr/local/bin/surf $2 >> /dev/null 2>&1 & ;;
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
     telegram) telegram-desktop ;;
-    allb)
-        sleep 0 && google-chrome-stable >> /dev/null 2>&1 &
-        sleep 1 && chromium >> /dev/null 2>&1 &
-        sleep 2 && firefox >> /dev/null 2>&1 &
-        sleep 3 && microsoft-edge-stable >> /dev/null 2>&1 &
-        ;;
     robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot $2 > ~/log ;;
     gologin) ~/scripts/lib/gologin $2 >> /dev/null 2>&1 & ;;
-    weather) notify-send "$(date '+%Y-%m-%d')" "$(curl 'wttr.in/ShangHai?format=3')\n$(curl 'wttr.in/WenZhou?format=3')" >> /dev/null 2>&1 & ;;
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf $2 >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
 esac
