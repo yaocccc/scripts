@@ -18,13 +18,17 @@ ls() {
     echo hp2 bluetoothctl connect HEADPHONE-SONY
     echo vb  bluetoothctl connect VOICEBOX
 }
+blconnect() {
+    bluetoothctl connect $1
+    notify-send 蓝牙设备 "$1已连接"
+}
 case $1 in
-    m1)  bluetoothctl connect $MOUSE1;;
-    m2)  bluetoothctl connect $MOUSE2;;
-    k1)  bluetoothctl connect $KEYBOARD1;;
-    k2)  bluetoothctl connect $KEYBOARD2;;
-    hp)  bluetoothctl connect $HEADPHONE;;
-    hp2) bluetoothctl connect $HEADPHONE2;;
-    vb)  bluetoothctl connect $VOICEBOX;;
+    m1)  blconnect $MOUSE1;;
+    m2)  blconnect $MOUSE2;;
+    k1)  blconnect $KEYBOARD1;;
+    k2)  blconnect $KEYBOARD2;;
+    hp)  blconnect $HEADPHONE;;
+    hp2) blconnect $HEADPHONE2;;
+    vb)  blconnect $VOICEBOX;;
     *)   ls ;;
 esac

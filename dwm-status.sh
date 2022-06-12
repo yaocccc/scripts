@@ -150,6 +150,7 @@ print_others() {
     [ "$(docker ps | grep v2raya)" ] && vpn_icon=""
     [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
     [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
+    [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
 
     if [ "$vpn_icon$headphone_icon" ]; then
         text=" $vpn_icon$headphone_icon "

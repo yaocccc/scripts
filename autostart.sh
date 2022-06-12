@@ -12,16 +12,17 @@ settings() {
 
 daemons() {
     [ $1 ] && sleep $1
-    fcitx5 &
+    killall fcitx5; fcitx5 &
     pactl info &
     nm-applet &
     flameshot &
     xfce4-power-manager &
     /usr/lib/gsd-xsettings &
-    ~/scripts/wine-notify.sh &
     dunst -conf ~/scripts/config/dunst.conf &
     lemonade server &
-    sleep 1 && ~/scripts/app-starter.sh picom
+    ~/scripts/app-starter.sh picom &
+    ~/scripts/app-starter.sh easyeffects &
+    # ~/scripts/wine-notify.sh &
     # sleep 10 && docker restart v2raya # 自启动v2raya翻墙
 }
 
