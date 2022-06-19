@@ -22,13 +22,24 @@ blconnect() {
     bluetoothctl connect $1
     notify-send 蓝牙设备 "$1已连接"
 }
+bldisconnect() {
+    bluetoothctl disconnect $1
+    notify-send 蓝牙设备 "$1已断开"
+}
 case $1 in
-    m1)  blconnect $MOUSE1;;
-    m2)  blconnect $MOUSE2;;
-    k1)  blconnect $KEYBOARD1;;
-    k2)  blconnect $KEYBOARD2;;
-    hp)  blconnect $HEADPHONE;;
-    hp2) blconnect $HEADPHONE2;;
-    vb)  blconnect $VOICEBOX;;
-    *)   ls ;;
+    m1)   blconnect $MOUSE1;;
+    m2)   blconnect $MOUSE2;;
+    k1)   blconnect $KEYBOARD1;;
+    k2)   blconnect $KEYBOARD2;;
+    hp)   blconnect $HEADPHONE;;
+    hp2)  blconnect $HEADPHONE2;;
+    vb)   blconnect $VOICEBOX;;
+    dm1)  bldisconnect $MOUSE1;;
+    dm2)  bldisconnect $MOUSE2;;
+    dk1)  bldisconnect $KEYBOARD1;;
+    dk2)  bldisconnect $KEYBOARD2;;
+    dhp)  bldisconnect $HEADPHONE;;
+    dhp2) bldisconnect $HEADPHONE2;;
+    dvb)  bldisconnect $VOICEBOX;;
+    *)    ls ;;
 esac

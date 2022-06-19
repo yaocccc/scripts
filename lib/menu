@@ -1,17 +1,22 @@
 ###############################################
 
 key=''
-_echo_green() { echo -e "\033[32m$1\033[0m"; }
+_echo_green() { echo -e "\033[32m$*\033[0m"; }
 _get_char() { SAVEDSTTY=`stty -g`; stty -echo; stty raw; dd if=/dev/tty bs=1 count=1 2> /dev/null; stty -raw; stty echo; stty $SAVEDSTTY; }
 _list() {
+    # 渲染tabs行
     text=''
-    for tab in ${menu_tabs[@]}; do
-        test ${tab} = ${menu_tabs[$tab_index]} && text=$text' \033[32m'$tab'\033[0m'  || text=$text' '$tab
+    for ((i = 0; i < ${#menu_tabs[@]}; i++)); do
+        tab=${menu_tabs[$i]}
+        [ "$tab" = "${menu_tabs[$tab_index]}" ] && text="$text \033[32m$tab\033[0m" || text="$text $tab"
     done
-    echo -e $text
 
-    for item in ${menu_items[@]}; do
-        test ${item} = ${menu_items[$item_index]} && _echo_green " > ${item}" || echo "   ${item}"
+    [ "$text" ] && echo -e "   $text\n"
+
+    # 渲染菜单选项行
+    for ((i = 0; i < ${#menu_items[@]}; i++)); do
+        item=${menu_items[$i]}
+        test "${item}" = "${menu_items[$item_index]}" && _echo_green " -> ${item[@]}" || echo "    ${item[@]}"
     done
 }
 _key() {

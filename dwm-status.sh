@@ -17,7 +17,7 @@ color07="#334466^"
 color08="#553388^"
 color09="#CCCCCC^"
 
-   coin_color="$s2d_fg$color00$s2d_bg$color02"
+ others_color="$s2d_fg$color01$s2d_bg$color02"
     cpu_color="$s2d_fg$color00$s2d_bg$color06"
   d_cpu_color="$s2d_fg$color09$s2d_bg$color06"
     mem_color="$s2d_fg$color05$s2d_bg$color07"
@@ -25,7 +25,22 @@ color09="#CCCCCC^"
    time_color="$s2d_fg$color00$s2d_bg$color06"
     vol_color="$s2d_fg$color08$s2d_bg$color07"
     bat_color="$s2d_fg$color00$s2d_bg$color02"
- others_color="$s2d_fg$color04$s2d_bg$color06"
+
+print_others() {
+    [ "$(docker ps | grep v2raya)" ] && vpn_icon=""
+    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && headphone_icon=""
+    [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && headphone_icon=""
+    [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && headphone_icon=""
+
+    icons="$vpn_icon$headphone_icon"
+    [ "$icons" = "" ] && icons=" "
+
+    if [ "$icons" ]; then
+        text=" $icons "
+        color=$others_color
+        printf "%s%s%s" "$color" "$text" "$s2d_reset"
+    fi
+}
 
 print_cpu() {
     cpu_icon=""
@@ -146,17 +161,4 @@ print_bat() {
     printf "%s%s%s" "$color" "$text" "$s2d_reset"
 }
 
-print_others() {
-    [ "$(docker ps | grep v2raya)" ] && vpn_icon=""
-    [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
-    [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
-    [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && headphone_icon="ﱘ"
-
-    if [ "$vpn_icon$headphone_icon" ]; then
-        text=" $vpn_icon$headphone_icon "
-        color=$others_color
-        printf "%s%s%s" "$color" "$text" "$s2d_reset"
-    fi
-}
-
-xsetroot -name "$(print_cpu)$(print_mem)$(print_time)$(print_vol)$(print_bat)$(print_others)"
+xsetroot -name "$(print_others)$(print_cpu)$(print_mem)$(print_time)$(print_vol)$(print_bat)"

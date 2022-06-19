@@ -24,6 +24,10 @@ set_vol() {
     [ "$(pactl list sinks | grep $HEADPHONE_A2DP_SONY)" ] && OUTPORT=$HEADPHONE_A2DP_SONY
     [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP_SONY)" ] && OUTPORT=$HEADPHONE_HSP_HFP_SONY
     [ "$(pactl list sinks | grep $VOICEBOX)" ] && OUTPORT=$VOICEBOX
+    pactl list sinks
+
+    echo $VOICEBOX
+    echo $OUTPORT
 
     case $1 in
         up) pactl set-sink-volume $OUTPORT +5% ;;
@@ -100,7 +104,7 @@ case $1 in
     wechat) /opt/apps/com.qq.weixin.deepin/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
-    flameshot) flameshot gui ;;
+    flameshot) flameshot gui -c -p ~/screenshot.png ;;
     vpn) sudo openfortivpn -c ~/.ssh/vpn.conf -p $2 ;;
     vpn2) sudo openfortivpn -c ~/.ssh/vpn2.conf -p Yumc\#3122$2 ;;
     screenkey) sk ;;
