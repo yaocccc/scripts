@@ -88,6 +88,7 @@ st_geometry() {
 }
 
 case $1 in
+    killw) kill -9 $(xprop | grep "_NET_WM_PID(CARDINAL)" | awk '{print $3}') ;;
     filemanager) pcmanfm ;;
     rofi) rofi -show run ;;
     rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" ;;
