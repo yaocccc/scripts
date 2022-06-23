@@ -76,7 +76,7 @@ st_geometry() {
             y=$(( $wy + 30 ))
             ;;
         top_right)
-            x=$(( $wx + $ww - 5 - $c * 8 ))
+            x=$(( $wx + $ww - 10 - $c * 8 ))
             y=$(( $wy + 30 ))
             ;;
         center)

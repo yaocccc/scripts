@@ -37,12 +37,6 @@ bluetooth_menu() {
         echo "$item"
     done
 }
-fcitx_menu() {
-    echo -e "\0prompt\x1ffcitx"
-    for item in "${fcitx_menu_item[@]}"; do
-        echo "$item"
-    done
-}
 
 [ ! "$*" ] && main_menu
 for i in "${!main_menu_item[@]}"; do
@@ -53,7 +47,4 @@ for i in "${!server_menu_item[@]}"; do
 done
 for i in "${!bluetooth_menu_item[@]}"; do
     [ "$*" = "${bluetooth_menu_item[$i]}" ] && eval "${bluetooth_cmd[$i]}"
-done
-for i in "${!fcitx_menu_item[@]}"; do
-    [ "$*" = "${fcitx_menu_item[$i]}" ] && eval "${fcitx_cmd[$i]}"
 done
