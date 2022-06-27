@@ -12,6 +12,7 @@ main_menu_item[3]="bluetooth"            ; main_cmd[3]='bluetooth_menu'
 server_menu_item[1]="v2raya"             ; server_cmd[1]='[ "$(docker ps | grep v2raya)" ] && docker stop v2raya >> /dev/null || docker restart v2raya >> /dev/null; ~/scripts/dwm-status.sh'
 server_menu_item[2]="picom"              ; server_cmd[2]='killall picom || ~/scripts/app-starter.sh picom'
 server_menu_item[3]="easyeffects"        ; server_cmd[3]='killall easyeffects || ~/scripts/app-starter.sh easyeffects'
+server_menu_item[4]="bilibili"           ; server_cmd[4]='~/workspace/go/src/bilibili/bin/run.sh'
 
 bluetooth_menu_item[1]="toggle A2DP/HSP/HFP" ; bluetooth_cmd[1]='~/scripts/app-starter.sh toggle_hp_sink'
 bluetooth_menu_item[2]="connect hp1"     ; bluetooth_cmd[2]='~/scripts/bluetooth.sh hp >> /dev/null &'

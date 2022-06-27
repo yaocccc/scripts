@@ -10,12 +10,12 @@ _list() {
         [ "$_tab" = "${menu_tabs[$tab_index]}" ] && text="$text $(_green $_tab)" || text="$text $_tab"
     done
 
-    [ "$text" ] && echo -e "   $text\n"
+    [ "$text" ] && echo -e "  $text\n"
 
     # 渲染菜单选项行
     for ((i = 0; i < ${#menu_items[@]}; i++)); do
         _item=${menu_items[$i]}
-        test "${_item}" = "${menu_items[$item_index]}" && echo -e $(_green " -> ${_item[@]}") || echo "    ${_item[@]}"
+        test "${_item}" = "${menu_items[$item_index]}" && echo -e $(_green " > ${_item[@]}") || echo "   ${_item[@]}"
     done
 }
 _key() {
@@ -38,6 +38,10 @@ _key() {
     pre_hook
     _list
     after_hook
+
+    # 有时会存在pre_hook或after_hook操作了tab或item的情况 需要做一层保护
+    tab=${menu_tabs[$tab_index]}
+    item=${menu_items[$item_index]}
 }
 
 ###############################################
