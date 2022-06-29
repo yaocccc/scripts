@@ -32,7 +32,8 @@ print_others() {
     [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
-    [ "$(ps -aux | grep 'danmu_sender' | sed 1d)" ] && icons=(${icons[@]} "")
+    [ "$(ps -aux | grep 'danmu_sender' | sed 1d)" ] && icons=(${icons[@]} "ﳲ")
+    [ "$AUTOSCREEN" = "OFF" ]  && icons=(${icons[@]} "ﴸ")
 
     if [ "$icons" ]; then
         text=" ${icons[@]} "
@@ -42,7 +43,7 @@ print_others() {
 }
 
 print_cpu() {
-    cpu_icon=""
+    cpu_icon="閭"
     cpu_text=$(top -n 1 -b | sed -n '3p' | awk '{printf "%02d", 100 - $8}')
 
     if  [ "$cpu_text" -ge 90 ]; then light="━━━━━"; dark="";
@@ -69,7 +70,7 @@ print_cpu() {
 print_mem() {
 	available=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
 	total=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}')
-	mem_icon=""
+	mem_icon=""
     mem_text=$(echo $[ ($total - $available) * 100 / $total ] | awk '{printf "%02d", $1}')
 
     if  [ "$mem_text" -ge 90 ]; then light="━━━━━"; dark="";
