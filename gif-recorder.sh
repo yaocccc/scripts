@@ -7,6 +7,7 @@
 
 gif_file=~/show.gif
 let x y w h
+source ~/scripts/lib/menu
 source ~/.profile
 
 getwin() {
@@ -29,38 +30,28 @@ esac
 
 case $SCREEN_MODE in
     ONE)
-        case $1 in
-            1) getwin ;;
-            2) getregion ;;
-            3) let x=$S1_X y=$S1_Y w=1440 h=900 ;;
-            *)
-                echo 1: 选择窗口
-                echo 2: 选择区域
-                echo 3: 内置屏幕-全屏
-                exit
-                ;;
+        menu_items=('选择窗口' '选择区域' '内置屏幕-全屏')
+        menu
+        case $item in
+            '选择窗口') getwin ;;
+            '选择区域') getregion ;;
+            '内置屏幕-全屏') let x=$S1_X y=$S1_Y w=1440 h=900 ;;
         esac
         ;;
     *)
-        case $1 in
-            1) getwin ;;
-            2) getregion ;;
-            3) let x=$S1_X     y=$S1_Y     w=1440     h=900 ;;
-            4) let x=$S2_X     y=$S2_Y     w=1920     h=1080 ;;
-            5) let x=$S2_X+478 y=$S2_Y+229 w=964      h=736 ;;
-            *)
-                echo 1: 选择窗口
-                echo 2: 选择区域
-                echo 3: 内置屏幕-全屏
-                echo 4: 外接屏幕-全屏
-                echo 5: 外接屏幕-中间区域
-                exit
-                ;;
+        menu_items=('选择窗口' '选择区域' '内置屏幕-全屏' '外接屏幕-全屏' '外接屏幕-中间区域')
+        menu
+        case $item in
+            '选择窗口') getwin ;;
+            '选择区域') getregion ;;
+            '内置屏幕-全屏') let x=$S1_X     y=$S1_Y     w=1440     h=900 ;;
+            '外接屏幕-全屏') let x=$S2_X     y=$S2_Y     w=1920     h=1080 ;;
+            '外接屏幕-中间区域') let x=$S2_X+478 y=$S2_Y+229 w=964      h=736 ;;
         esac
         ;;
 esac
 
-[ "$2" ] \
-    && byzanz-record -x $x -y $y -w $w -h $h -v $gif_file --exec="$2 $3 $4 $5 $6 $7 $8 $9" \
-    || byzanz-record -x $x -y $y -w $w -h $h -v $gif_file
+[ "$*" ] && _cmd="$*"
+[ -z "$_cmd" ] && printf "输入附加命令[回车结束]: " && read _cmd
+[ -z "$_cmd" ] && byzanz-record -x $x -y $y -w $w -h $h -v $gif_file || byzanz-record -x $x -y $y -w $w -h $h -v $gif_file --exec="$_cmd"
 sleep 1

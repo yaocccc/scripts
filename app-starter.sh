@@ -91,6 +91,7 @@ case $1 in
     killw) kill -9 $(xprop | grep "_NET_WM_PID(CARDINAL)" | awk '{print $3}') ;;
     filemanager) pcmanfm ;;
     rofi) rofi -show run ;;
+    rofi_window) rofi -show window -show-icons ;;
     rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
@@ -105,7 +106,8 @@ case $1 in
     wechat) /opt/apps/com.qq.weixin.deepin/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
-    flameshot) flameshot gui -c -p ~/screenshot.png ;;
+    flameshot) flameshot gui -c -p ~/Pictures/screenshots ;;
+    open_last_screenshot) eog ~/Pictures/screenshots/$(ls -t ~/Pictures/screenshots | sed '2,9999d') >> /dev/null 2>&1 & ;;
     vpn) sudo openfortivpn -c ~/.ssh/vpn.conf -p $2 ;;
     vpn2) sudo openfortivpn -c ~/.ssh/vpn2.conf -p Yumc\#3122$2 ;;
     screenkey) sk ;;
@@ -116,7 +118,7 @@ case $1 in
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
     telegram) telegram-desktop ;;
     robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot $2 > ~/log ;;
-    gologin) ~/scripts/lib/gologin $2 >> /dev/null 2>&1 & ;;
-    picom) picom --experimental-backends --config ~/scripts/config/picom.conf $2 >> /dev/null 2>&1 & ;;
+    gologin) ~/scripts/lib/gologin >> /dev/null 2>&1 & ;;
+    picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
 esac

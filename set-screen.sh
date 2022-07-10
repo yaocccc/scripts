@@ -4,6 +4,7 @@
   one: INNER
   two: OUT - INNER
   check: 检测显示器连接状态是否变化 -> 调用two
+  toggle_auto: 开启/关闭自动分辨率调整开关
 !
 
 INNER_SCREEN=eDP-1
