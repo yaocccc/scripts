@@ -11,10 +11,34 @@ sk() {
 }
 
 blurlock() {
-    import -window root /tmp/screenshot.png
-    convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
-    rm /tmp/screenshot.png
-    i3lock -i /tmp/screenshotblur.png
+    i3lock \
+    --blur 5 \
+    --bar-indicator \
+    --bar-pos y+h \
+    --bar-direction 1 \
+    --bar-max-height 50 \
+    --bar-base-width 50 \
+    --bar-color 00000022 \
+    --keyhl-color ffffffcc \
+    --bar-periodic-step 50 \
+    --bar-step 20 \
+    --redraw-thread \
+    --clock \
+    --force-clock \
+    --time-pos x+5:y+h-80 \
+    --time-color ffffffff \
+    --date-pos tx:ty+15 \
+    --date-color ffffffff \
+    --date-align 1 \
+    --time-align 1 \
+    --ringver-color ffffff00 \
+    --ringwrong-color ffffff88 \
+    --status-pos x+5:y+h-16 \
+    --verif-align 1 \
+    --wrong-align 1 \
+    --verif-color ffffffff \
+    --wrong-color ffffffff \
+    --modif-pos -50:-50
 }
 
 set_vol() {

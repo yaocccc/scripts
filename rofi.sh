@@ -5,7 +5,7 @@
 #   4: 当没有输出时 整个过程结束
 
 # !!! 确保所有item没有重复的 !!!
-main_menu_item[1]="set wallpaper"        ; main_cmd[1]='~/scripts/set-screen.sh; main_menu'
+main_menu_item[1]="set wallpaper"        ; main_cmd[1]='~/scripts/set-wallpaper.sh; main_menu'
 main_menu_item[2]="toggle some server"   ; main_cmd[2]='server_menu'
 main_menu_item[3]="bluetooth"            ; main_cmd[3]='bluetooth_menu'
 main_menu_item[4]="open last screenshot" ; main_cmd[4]='~/scripts/app-starter.sh open_last_screenshot'

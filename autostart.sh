@@ -12,7 +12,8 @@ settings() {
 
 daemons() {
     [ $1 ] && sleep $1
-    killall fcitx5; fcitx5 &
+    # killall fcitx5;
+    fcitx5 &
     pactl info &
     nm-applet &
     flameshot &
