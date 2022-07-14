@@ -142,7 +142,10 @@ case $1 in
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
     telegram) telegram-desktop ;;
     robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot $2 > ~/log ;;
-    gologin) ~/scripts/lib/gologin >> /dev/null 2>&1 & ;;
+    gologin)
+        ~/scripts/lib/gologin >> /dev/null 2>&1 &
+        [ "$AUTOSCREEN" = "ON" ] && ~/scripts/set-screen.sh toggle_auto
+        ;;
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
 esac
