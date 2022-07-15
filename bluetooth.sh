@@ -21,10 +21,12 @@ ls() {
 blconnect() {
     bluetoothctl connect $1
     notify-send 蓝牙设备 "$1已连接"
+    ~/scripts/dwm-status.sh
 }
 bldisconnect() {
     bluetoothctl disconnect $1
     notify-send 蓝牙设备 "$1已断开"
+    ~/scripts/dwm-status.sh
 }
 case $1 in
     m1)   blconnect $MOUSE1;;
