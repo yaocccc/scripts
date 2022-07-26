@@ -32,20 +32,13 @@ one() {
 }
 check() {
     source ~/.profile
-    [ "$AUTOSCREEN" = "OFF" ] && return
     [ "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" == "ONE" ] && two;
     [ ! "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" != "ONE" ] && two;
-}
-toggle_auto() {
-    source ~/.profile
-    [ "$AUTOSCREEN" = "OFF" ] && ~/scripts/edit-profile.sh AUTOSCREEN ON || ~/scripts/edit-profile.sh AUTOSCREEN OFF
-    ~/scripts/dwm-status.sh
 }
 
 case $1 in
     one) one ;;
     two) two ;;
     check) check ;;
-    toggle_auto) toggle_auto ;;
     *) two ;;
 esac

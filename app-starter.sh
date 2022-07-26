@@ -116,7 +116,7 @@ case $1 in
     filemanager) pcmanfm ;;
     rofi) rofi -show run ;;
     rofi_window) rofi -show window -show-icons ;;
-    rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" ;;
+    rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" && sleep 1 && ~/scripts/dwm-status.sh ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
     qqmusic) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
@@ -142,10 +142,8 @@ case $1 in
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
     telegram) telegram-desktop ;;
     robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot $2 > ~/log ;;
-    gologin)
-        ~/scripts/lib/gologin >> /dev/null 2>&1 &
-        [ "$AUTOSCREEN" = "ON" ] && ~/scripts/set-screen.sh toggle_auto
-        ;;
+    gologin) ~/scripts/lib/gologin >> /dev/null 2>&1 & ;;
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
+    aria2c) aria2c >> /dev/null 2>&1 & ;;
 esac

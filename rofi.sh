@@ -4,17 +4,24 @@
 #   3: 每次选中后 会用选中项作为入参再次调用脚本
 #   4: 当没有输出时 整个过程结束
 
+source ~/.profile
+
 # !!! 确保所有item没有重复的 !!!
 main_menu_item[1]="set wallpaper"        ; main_cmd[1]='~/scripts/set-wallpaper.sh; main_menu'
 main_menu_item[2]="toggle some server"   ; main_cmd[2]='server_menu'
 main_menu_item[3]="bluetooth"            ; main_cmd[3]='bluetooth_menu'
 main_menu_item[4]="open last screenshot" ; main_cmd[4]='~/scripts/app-starter.sh open_last_screenshot'
+if [ $GO111MODULE = 'on' ]; then
+    main_menu_item[5]="GO111MODULE[on]"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
+else
+    main_menu_item[5]="GO111MODULE[off]"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
+fi
 
-server_menu_item[1]="v2raya"             ; server_cmd[1]='[ "$(docker ps | grep v2raya)" ] && docker stop v2raya >> /dev/null || docker restart v2raya >> /dev/null; ~/scripts/dwm-status.sh'
+server_menu_item[1]="v2raya"             ; server_cmd[1]='[ "$(docker ps | grep v2raya)" ] && docker stop v2raya >> /dev/null || docker restart v2raya >> /dev/null;'
 server_menu_item[2]="picom"              ; server_cmd[2]='killall picom || ~/scripts/app-starter.sh picom'
 server_menu_item[3]="easyeffects"        ; server_cmd[3]='killall easyeffects || ~/scripts/app-starter.sh easyeffects'
 server_menu_item[4]="bilibili"           ; server_cmd[4]='~/workspace/go/src/bilibili/bin/run.sh'
-server_menu_item[5]="auto screen"        ; server_cmd[5]='~/scripts/set-screen.sh toggle_auto'
+server_menu_item[5]="aria2c"             ; server_cmd[5]='killall aria2c || ~/scripts/app-starter.sh aria2c'
 
 bluetooth_menu_item[1]="toggle A2DP/HSP/HFP" ; bluetooth_cmd[1]='~/scripts/app-starter.sh toggle_hp_sink'
 bluetooth_menu_item[2]="connect hp1"     ; bluetooth_cmd[2]='~/scripts/bluetooth.sh hp >> /dev/null &'
