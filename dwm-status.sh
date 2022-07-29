@@ -17,14 +17,12 @@ color07="#334466^"
 color08="#553388^"
 color09="#CCCCCC^"
 
- others_color="$s2d_fg$color01$s2d_bg$color02"
-    cpu_color="$s2d_fg$color00$s2d_bg$color06"
-  d_cpu_color="$s2d_fg$color09$s2d_bg$color06"
-    mem_color="$s2d_fg$color05$s2d_bg$color07"
-  d_mem_color="$s2d_fg$color09$s2d_bg$color07"
-   time_color="$s2d_fg$color00$s2d_bg$color06"
-    vol_color="$s2d_fg$color08$s2d_bg$color07"
-    bat_color="$s2d_fg$color00$s2d_bg$color02"
+others_color="$s2d_fg$color01$s2d_bg$color02"
+   cpu_color="$s2d_fg$color00$s2d_bg$color06"
+   mem_color="$s2d_fg$color05$s2d_bg$color07"
+  time_color="$s2d_fg$color00$s2d_bg$color06"
+   vol_color="$s2d_fg$color08$s2d_bg$color07"
+   bat_color="$s2d_fg$color00$s2d_bg$color02"
 
 print_others() {
     icons=()
@@ -45,54 +43,22 @@ print_others() {
 
 print_cpu() {
     cpu_icon="閭"
-    cpu_text=$(top -n 1 -b | sed -n '3p' | awk '{printf "%02d", 100 - $8}')
+    cpu_text=$(top -n 1 -b | sed -n '3p' | awk '{printf "%02d%", 100 - $8}')
 
-    if  [ "$cpu_text" -ge 90 ]; then light="━━━━━"; dark="";
-    elif [ "$cpu_text" -ge 70 ]; then light="━━━━"; dark="━";
-    elif [ "$cpu_text" -ge 50 ]; then light="━━━"; dark="━━";
-    elif [ "$cpu_text" -ge 30 ]; then light="━━"; dark="━━━";
-    elif [ "$cpu_text" -ge 10 ]; then light="━"; dark="━━━━";
-    else light=""; dark="━━━━━"; fi
-
-    cpu_text=$cpu_text%
-
-    text1=" $cpu_icon $light"
-    text2="$dark"
-    text3=" $cpu_text "
-
-    color1=$cpu_color
-    color2=$d_cpu_color
-
-    printf "%s%s%s" "$color1" "$text1" "$s2d_reset"
-    printf "%s%s%s" "$color2" "$text2" "$s2d_reset"
-    printf "%s%s%s" "$color1" "$text3" "$s2d_reset"
+    text=" $cpu_icon $cpu_text "
+    color=$cpu_color
+    printf "%s%s%s" "$color" "$text" "$s2d_reset"
 }
 
 print_mem() {
 	available=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
 	total=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}')
 	mem_icon=""
-    mem_text=$(echo $[ ($total - $available) * 100 / $total ] | awk '{printf "%02d", $1}')
+    mem_text=$(echo $[ ($total - $available) * 100 / $total ] | awk '{printf "%02d%", $1}')
 
-    if  [ "$mem_text" -ge 90 ]; then light="━━━━━"; dark="";
-    elif [ "$mem_text" -ge 70 ]; then light="━━━━"; dark="━";
-    elif [ "$mem_text" -ge 50 ]; then light="━━━"; dark="━━";
-    elif [ "$mem_text" -ge 30 ]; then light="━━"; dark="━━━";
-    elif [ "$mem_text" -ge 10 ]; then light="━"; dark="━━━━";
-    else light=""; dark="━━━━━"; fi
-
-    mem_text=$mem_text%
-
-    text1=" $mem_icon $light"
-    text2="$dark"
-    text3=" $mem_text "
-
-    color1=$mem_color
-    color2=$d_mem_color
-
-    printf "%s%s%s" "$color1" "$text1" "$s2d_reset"
-    printf "%s%s%s" "$color2" "$text2" "$s2d_reset"
-    printf "%s%s%s" "$color1" "$text3" "$s2d_reset"
+    text=" $mem_icon $mem_text "
+    color=$mem_color
+    printf "%s%s%s" "$color" "$text" "$s2d_reset"
 }
 
 print_time() {

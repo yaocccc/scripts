@@ -146,4 +146,8 @@ case $1 in
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
     aria2c) aria2c >> /dev/null 2>&1 & ;;
+    vmwave)
+        sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
+        sudo modprobe -a vmw_vmci vmmon
+        sudo vmware
 esac
