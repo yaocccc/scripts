@@ -154,4 +154,5 @@ case $1 in
         sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
         sudo modprobe -a vmw_vmci vmmon
         sudo vmware
+        ;;
 esac
