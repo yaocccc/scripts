@@ -39,6 +39,7 @@ blurlock() {
     --verif-color ffffffff \
     --wrong-color ffffffff \
     --modif-pos -50:-50
+    xdotool mousemove_relative 1 1 # 该命令用于解决自动锁屏后未展示锁屏界面的问题(移动一下鼠标)
 }
 
 set_vol() {
@@ -90,6 +91,9 @@ st_geometry() {
     position=$1; c=$2; l=$3
     if [ "$mx" -lt 1920 ]; then
         wx=0; wy=0; ww=1920; wh=1080
+        if [ "$SCREEN_MODE" = "ONE" ]; then
+            ww=1440; wh=900
+        fi
     else
         wx=1920; wy=325; ww=1440; wh=900
     fi
