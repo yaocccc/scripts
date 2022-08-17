@@ -33,15 +33,6 @@ every10s() {
     done
 }
 
-every300s() {
-    [ $1 ] && sleep $1
-    while true
-    do
-        ~/scripts/dwm-status.sh &
-        sleep 300
-    done
-}
-
 every1000s() {
     [ $1 ] && sleep $1
     while true
@@ -57,5 +48,4 @@ every1000s() {
 settings 1 &
 daemons 3 &
 every10s 5 &
-every300s 30 &
 every1000s 30 &

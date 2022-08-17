@@ -124,7 +124,10 @@ case $1 in
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
     qqmusic) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
-    music) close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp') ;;
+    music)
+        # close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp')
+        lx-music-desktop -dt >> /dev/null 2>&1 &
+        ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
     tim)
@@ -153,6 +156,6 @@ case $1 in
     vmwave)
         sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
         sudo modprobe -a vmw_vmci vmmon
-        sudo vmware
+        sudo vmware >> /dev/null 2>&1 & 
         ;;
 esac

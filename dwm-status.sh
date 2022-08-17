@@ -27,6 +27,7 @@ others_color="$s2d_fg$color01$s2d_bg$color02"
 print_others() {
     icons=()
     [ "$(docker ps | grep v2raya)" ] && icons=(${icons[@]} "")
+    [ "$(docker ps | grep 'arch')" ] && icons=(${icons[@]} "")
     [ "$(bluetoothctl info 64:03:7F:7C:81:15 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$(bluetoothctl info 8C:DE:F9:E6:E5:6B | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
     [ "$(bluetoothctl info 88:C9:E8:14:2A:72 | grep 'Connected: yes')" ] && icons=(${icons[@]} "")
@@ -106,7 +107,8 @@ print_vol() {
 }
 
 print_bat() {
-    bat_text=$(expr $(acpi -b | sed 2d | awk '{print $4}' | grep -Eo "[0-9]+"))
+    bat_text=$(acpi -b | sed 2d | awk '{print $4}' | grep -Eo "[0-9]+")
+    [ ! "$bat_text" ] && bat_text=$(acpi -b | sed 2d | awk '{print $5}' | grep -Eo "[0-9]+")
     [ ! "$(acpi -b | grep 'Battery 0' | grep Discharging)" ] && charge_icon=""
     if  [ "$bat_text" -ge 95 ]; then charge_icon=""; bat_icon="";
     elif [ "$bat_text" -ge 90 ]; then bat_icon="";

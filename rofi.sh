@@ -22,6 +22,7 @@ server_menu_item[2]="picom"              ; server_cmd[2]='killall picom || ~/scr
 server_menu_item[3]="easyeffects"        ; server_cmd[3]='killall easyeffects || ~/scripts/app-starter.sh easyeffects'
 server_menu_item[4]="bilibili"           ; server_cmd[4]='~/workspace/go/src/bilibili/bin/run.sh'
 server_menu_item[5]="aria2c"             ; server_cmd[5]='killall aria2c || ~/scripts/app-starter.sh aria2c'
+server_menu_item[6]="virsual arch"       ; server_cmd[6]='[ "$(docker ps | grep minearch)" ] && docker stop minearch >> /dev/null || docker restart minearch >> /dev/null && docker exec -u root -itd arch bash -c "/usr/sbin/vncserver :1" ;'
 
 bluetooth_menu_item[1]="toggle A2DP/HSP/HFP" ; bluetooth_cmd[1]='~/scripts/app-starter.sh toggle_hp_sink'
 bluetooth_menu_item[2]="connect hp1"     ; bluetooth_cmd[2]='~/scripts/bluetooth.sh hp >> /dev/null &'

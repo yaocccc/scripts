@@ -24,6 +24,7 @@ _key() {
     len=${#menu_tabs[*]}
     test $tab_index -lt 0 && tab_index=$((len - 1))
     test $tab_index -gt $((len - 1)) && tab_index=0
+    test $tab_index -lt 0 && tab_index=0
     tab=${menu_tabs[$tab_index]}
 
     # 计算新的item_index和item
@@ -31,6 +32,7 @@ _key() {
     len=${#menu_items[*]}
     test $item_index -lt 0 && item_index=$((len - 1))
     test $item_index -gt $((len - 1)) && item_index=0
+    test $item_index -lt 0 && item_index=0
     item=${menu_items[$item_index]}
 
     clear
