@@ -125,8 +125,8 @@ case $1 in
     chrome) google-chrome-stable ;;
     qqmusic) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
     music)
-        # close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp')
-        lx-music-desktop -dt >> /dev/null 2>&1 &
+        close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp')
+        # lx-music-desktop -dt >> /dev/null 2>&1 &
         ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
@@ -140,7 +140,6 @@ case $1 in
     flameshot) flameshot gui -c -p ~/Pictures/screenshots ;;
     open_last_screenshot) eog ~/Pictures/screenshots/$(ls -t ~/Pictures/screenshots | sed '2,9999d') >> /dev/null 2>&1 & ;;
     vpn) sudo openfortivpn -c ~/.ssh/vpn.conf -p $2 ;;
-    vpn2) sudo openfortivpn -c ~/.ssh/vpn2.conf -p Yumc\#3122$2 ;;
     screenkey) sk ;;
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;

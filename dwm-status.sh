@@ -52,11 +52,13 @@ print_cpu() {
 }
 
 print_mem() {
-	available=$(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}')
-	total=$(grep -m1 'MemTotal:' /proc/meminfo | awk '{print $2}')
+    mem_total=$(cat /proc/meminfo | grep "MemTotal:"|awk '{print $2}')
+    mem_free=$(cat /proc/meminfo | grep "MemFree:"|awk '{print $2}')
+    mem_buffers=$(cat /proc/meminfo | grep "Buffers:"|awk '{print $2}')
+    mem_cached=$(cat /proc/meminfo | grep -w "Cached:"|awk '{print $2}')
+    men_usage_rate=$(((mem_total - mem_free - mem_buffers - mem_cached) * 100 / mem_total))
 	mem_icon=""
-    mem_text=$(echo $[ ($total - $available) * 100 / $total ] | awk '{printf "%02d%", $1}')
-
+    mem_text=$(echo $men_usage_rate | awk '{printf "%02d%", $1}')
     text=" $mem_icon $mem_text "
     color=$mem_color
     printf "%s%s%s" "$color" "$text" "$s2d_reset"
