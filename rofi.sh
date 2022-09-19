@@ -12,15 +12,14 @@ main_menu_item[2]="toggle some server"   ; main_cmd[2]='server_menu'
 main_menu_item[3]="bluetooth"            ; main_cmd[3]='bluetooth_menu'
 main_menu_item[4]="open last screenshot" ; main_cmd[4]='~/scripts/app-starter.sh open_last_screenshot'
 if [ $GO111MODULE = 'on' ]; then
-    main_menu_item[5]="GO111MODULE[on]"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
+    main_menu_item[5]="close GO111MODULE"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
 else
-    main_menu_item[5]="GO111MODULE[off]"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
+    main_menu_item[5]="open GO111MODULE"   ; main_cmd[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
 fi
 
 server_menu_item[1]="v2raya"             ; server_cmd[1]='[ "$(docker ps | grep v2raya)" ] && docker stop v2raya >> /dev/null || docker restart v2raya >> /dev/null;'
 server_menu_item[2]="picom"              ; server_cmd[2]='killall picom || ~/scripts/app-starter.sh picom'
 server_menu_item[3]="easyeffects"        ; server_cmd[3]='killall easyeffects || ~/scripts/app-starter.sh easyeffects'
-server_menu_item[4]="bilibili"           ; server_cmd[4]='~/workspace/go/src/bilibili/bin/run.sh'
 server_menu_item[5]="aria2c"             ; server_cmd[5]='killall aria2c || ~/scripts/app-starter.sh aria2c'
 server_menu_item[6]="virsual arch"       ; server_cmd[6]='[ "$(docker ps | grep minearch)" ] && docker stop minearch >> /dev/null || docker restart minearch >> /dev/null && docker exec -u root -itd arch bash -c "/usr/sbin/vncserver :1" ;'
 

@@ -85,7 +85,8 @@ close_music() {
 }
 
 st_geometry() {
-    # 单位x = 8, 单位y = 16
+    # 单位x = 9, 单位y = 18
+    uw=8; uh=17
     mx=`xdotool getmouselocation --shell | grep X= | sed 's/X=//'`
     my=`xdotool getmouselocation --shell | grep Y= | sed 's/Y=//'`
     position=$1; c=$2; l=$3
@@ -100,16 +101,16 @@ st_geometry() {
 
     case $position in
         top_left)
-            x=$(( $wx + 5 ))
-            y=$(( $wy + 30 ))
+            x=$(( $wx + 12 ))
+            y=$(( $wy + 38 ))
             ;;
         top_right)
-            x=$(( $wx + $ww - 10 - $c * 8 ))
-            y=$(( $wy + 30 ))
+            x=$(( $wx + $ww - 12 - $c * $uw ))
+            y=$(( $wy + 38 ))
             ;;
         center)
-            x=$(( $wx + $ww / 2 - $c * 4 ))
-            y=$(( $wy + $wh / 2 - $l * 8 ))
+            x=$(( $wx + $ww / 2 - $c * $uw / 2 ))
+            y=$(( $wy + $wh / 2 - $l * $uh / 2 + 12 ))
             ;;
     esac
     echo $c\x$l+$x+$y
@@ -128,18 +129,21 @@ case $1 in
         close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp')
         # lx-music-desktop -dt >> /dev/null 2>&1 &
         ;;
+    bili)
+        ~/scripts/lib/bili_tui -c ~/.config/bili.toml
+        ;;
     pavucontrol) pavucontrol ;;
     postman) postman ;;
     tim)
-        sudo -S sysctl -w net.ipv6.conf.all.disable_ipv6=1
-        /opt/apps/com.qq.tim.spark/files/run.sh
+        # sudo -S sysctl -w net.ipv6.conf.all.disable_ipv6=1
+        # /opt/apps/com.qq.tim.spark/files/run.sh
+        ~/workspace/Icalingua-plus-plus/icalingua/build/linux-unpacked/icalingua
         ;;
     wechat) /opt/apps/com.qq.weixin.deepin/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
     flameshot) flameshot gui -c -p ~/Pictures/screenshots ;;
     open_last_screenshot) eog ~/Pictures/screenshots/$(ls -t ~/Pictures/screenshots | sed '2,9999d') >> /dev/null 2>&1 & ;;
-    vpn) sudo openfortivpn -c ~/.ssh/vpn.conf -p $2 ;;
     screenkey) sk ;;
     ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
@@ -152,9 +156,9 @@ case $1 in
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
     aria2c) aria2c >> /dev/null 2>&1 & ;;
-    vmwave)
-        sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
-        sudo modprobe -a vmw_vmci vmmon
-        sudo vmware >> /dev/null 2>&1 & 
-        ;;
+    # vmwave)
+    #     sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
+    #     sudo modprobe -a vmw_vmci vmmon
+    #     sudo vmware >> /dev/null 2>&1 & 
+    #     ;;
 esac

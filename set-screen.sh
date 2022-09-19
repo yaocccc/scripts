@@ -32,13 +32,19 @@ one() {
 }
 check() {
     source ~/.profile
+    [ "$SCREEN_CHECK" = "off" ] && return;
     [ "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" == "ONE" ] && two;
     [ ! "$CONNECT_SCREEN" ] && [ "$SCREEN_MODE" != "ONE" ] && two;
+}
+toggle_auto() {
+    source ~/.profile
+    [ "$SCREEN_CHECK" = "off" ] && ~/scripts/edit-profile.sh SCREEN_CHECK on || ~/scripts/edit-profile.sh SCREEN_CHECK off
 }
 
 case $1 in
     one) one ;;
     two) two ;;
     check) check ;;
+    toggle_auto) toggle_auto ;;
     *) two ;;
 esac

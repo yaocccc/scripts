@@ -16,6 +16,8 @@ getwin() {
     read y < <(awk -F: '/Absolute upper-left Y/{print $2}' <<< "$XWININFO")
     read w < <(awk -F: '/Width/{print $2}' <<< "$XWININFO")
     read h < <(awk -F: '/Height/{print $2}' <<< "$XWININFO")
+    w=$((w + 4))
+    h=$((h + 4))
 }
 getregion() {
     xywh=($(xrectsel "%x %y %w %h")) || exit -1
