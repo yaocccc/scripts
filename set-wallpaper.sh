@@ -4,6 +4,7 @@
 !
 
 source ~/.profile
+[ "$WALLPAPER_MODE" = "" ] && export WALLPAPER_MODE=PIC
 
 case $WALLPAPER_MODE in
     PIC)

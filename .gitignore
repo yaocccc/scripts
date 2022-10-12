@@ -8,4 +8,3 @@ logs/
 *.log
 **/dump.rdb
 **/.DS_Store
-lib/gologin

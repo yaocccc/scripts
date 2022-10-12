@@ -1,6 +1,8 @@
 #! /bin/bash
 # DWM自启动脚本
 
+source ~/.profile
+
 settings() {
     [ $1 ] && sleep $1
     xset s 600
@@ -8,6 +10,7 @@ settings() {
     syndaemon -i 1 -t -K -R -d
     xss-lock -- ~/scripts/app-starter.sh blurlock &
     ~/scripts/set-screen.sh &
+    $DWM/statusbar/statusbar.sh cron &
 }
 
 daemons() {
@@ -20,7 +23,7 @@ daemons() {
     dunst -conf ~/scripts/config/dunst.conf &
     lemonade server &
     ~/scripts/app-starter.sh picom &
-    ~/scripts/app-starter.sh easyeffects &
+    # ~/scripts/app-starter.sh easyeffects &
 }
 
 every10s() {
@@ -28,7 +31,6 @@ every10s() {
     while true
     do
         ~/scripts/set-screen.sh check &
-        ~/scripts/dwm-status.sh &
         sleep 10
     done
 }

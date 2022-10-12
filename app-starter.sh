@@ -25,7 +25,7 @@ blurlock() {
     --redraw-thread \
     --clock \
     --force-clock \
-    --time-pos x+5:y+h-80 \
+    --time-pos x+5:y+h-80 xdotool\
     --time-color ffffffff \
     --date-pos tx:ty+15 \
     --date-color ffffffff \
@@ -44,21 +44,15 @@ blurlock() {
 
 set_vol() {
     OUTPORT=$SPEAKER
-    [ "$(pactl list sinks | grep $HEADPHONE_A2DP)" ] && OUTPORT=$HEADPHONE_A2DP
     [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP)" ] && OUTPORT=$HEADPHONE_HSP_HFP
-    [ "$(pactl list sinks | grep $HEADPHONE_A2DP_SONY)" ] && OUTPORT=$HEADPHONE_A2DP_SONY
     [ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP_SONY)" ] && OUTPORT=$HEADPHONE_HSP_HFP_SONY
-    [ "$(pactl list sinks | grep $VOICEBOX)" ] && OUTPORT=$VOICEBOX
     pactl list sinks
-
-    echo $VOICEBOX
-    echo $OUTPORT
 
     case $1 in
         up) pactl set-sink-volume $OUTPORT +5% ;;
         down) pactl set-sink-volume $OUTPORT -5% ;;
     esac
-    ~/scripts/dwm-status.sh
+    $DWM/statusbar/statusbar.sh update vol
 }
 
 toggle_hp_sink() {
@@ -121,44 +115,23 @@ case $1 in
     filemanager) pcmanfm ;;
     rofi) rofi -show run ;;
     rofi_window) rofi -show window -show-icons ;;
-    rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" && sleep 1 && ~/scripts/dwm-status.sh ;;
+    rofi_p) rofi -show menu -modi "menu:~/scripts/rofi.sh" && sleep 1 && $DWM/statusbar/statusbar.sh updateall ;;
     blurlock) blurlock ;;
     chrome) google-chrome-stable ;;
-    qqmusic) kill -9 $(ps -u $USER -o pid,comm | grep 'qqmusic' | awk '{print $1}') || qqmusic ;;
-    music)
-        close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp')
-        # lx-music-desktop -dt >> /dev/null 2>&1 &
-        ;;
-    bili)
-        ~/scripts/lib/bili_tui -c ~/.config/bili.toml
-        ;;
+    music) close_music || (mpd; ~/scripts/lib/st -g $(st_geometry top_right 50 10) -t music -c music -e 'ncmpcpp') ;;
+    bili) ~/scripts/lib/bili_tui -c ~/.config/bili.toml ;;
     pavucontrol) pavucontrol ;;
-    postman) postman ;;
-    tim)
-        # sudo -S sysctl -w net.ipv6.conf.all.disable_ipv6=1
-        # /opt/apps/com.qq.tim.spark/files/run.sh
-        ~/workspace/Icalingua-plus-plus/icalingua/build/linux-unpacked/icalingua
-        ;;
+    tim) icalingua ;;
     wechat) /opt/apps/com.qq.weixin.deepin/files/run.sh ;;
     wxwork) /opt/apps/com.qq.weixin.work.deepin/files/run.sh ;;
     st) st ;;
     flameshot) flameshot gui -c -p ~/Pictures/screenshots ;;
     open_last_screenshot) eog ~/Pictures/screenshots/$(ls -t ~/Pictures/screenshots | sed '2,9999d') >> /dev/null 2>&1 & ;;
     screenkey) sk ;;
-    ssr) electron-ssr ;;
     set_vol) set_vol $2 ;;
     toggle_hp_sink) toggle_hp_sink ;;
     surf) /usr/local/bin/surf $2 >> /dev/null 2>&1 & ;;
     fst) /usr/local/bin/st -c float -g $(st_geometry center 100 30) ;;
-    telegram) telegram-desktop ;;
-    robot) kill -9 $(ps -u $USER -o pid,comm | grep 'robot' | awk '{print $1}') || ~/workspace/robotjs/bin/robot $2 > ~/log ;;
-    gologin) ~/scripts/lib/gologin >> /dev/null 2>&1 & ;;
     picom) picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & ;;
     easyeffects) easyeffects --gapplication-service >> /dev/null 2>&1 & ;;
-    aria2c) aria2c >> /dev/null 2>&1 & ;;
-    # vmwave)
-    #     sudo systemctl start vmware-networks.service vmware-usbarbitrator.service
-    #     sudo modprobe -a vmw_vmci vmmon
-    #     sudo vmware >> /dev/null 2>&1 & 
-    #     ;;
 esac
