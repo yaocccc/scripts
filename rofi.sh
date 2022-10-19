@@ -9,9 +9,9 @@ source ~/.profile
 menu_items[1]='set wallpaper'; cmds[1]='feh --randomize --bg-fill ~/Pictures/002/*.png; show_menu'
 
 if [ "$(sudo docker ps | grep v2raya)" ]; then
-    menu_items[2]='close v2raya'; cmds[2]='coproc (sudo docker stop v2raya > /dev/null 2>&1)'
+    menu_items[2]='close v2raya'; cmds[2]='coproc (sudo docker stop v2raya; $DWM/statusbar/statusbar.sh update icons)'
 else 
-    menu_items[2]='open v2raya';  cmds[2]='coproc (sudo docker restart v2raya > /dev/null 2>&1)'
+    menu_items[2]='open v2raya';  cmds[2]='coproc (sudo docker restart v2raya; $DWM/statusbar/statusbar.sh update icons)'
 fi
 
 if [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ]; then

@@ -1,7 +1,7 @@
 #! /bin/bash
 
-source ~/.profile
-case $SCREEN_MODE in
-    ONE) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
-    TWO) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
+CONNECTED_MONITORS=$(xrandr --listmonitors | sed 1d | awk '{print $4}' | wc -l)
+case $CONNECTED_MONITORS in
+    1) killall screenkey || screenkey -p fixed -g 66%x8%+17%-5% & ;;
+    2) killall screenkey || screenkey -p fixed -g 50%x8%+25%-11% & ;;
 esac
