@@ -6,40 +6,93 @@
 
 source ~/.profile
 
-menu_items[1]='set wallpaper'; cmds[1]='feh --randomize --bg-fill ~/Pictures/002/*.png; show_menu'
+##### MAIN_MENU ####
+    main_menu_items=('set wallpaper' 'update statusbar' 'toggle server')
+    main_menu_cmds=(
+        'feh --randomize --bg-fill ~/Pictures/002/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
+        'show_statusbar_menu'
+        'show_toggle_server_menu'
+    )
 
-if [ "$(sudo docker ps | grep v2raya)" ]; then
-    menu_items[2]='close v2raya'; cmds[2]='coproc (sudo docker stop v2raya; $DWM/statusbar/statusbar.sh update icons)'
-else 
-    menu_items[2]='open v2raya';  cmds[2]='coproc (sudo docker restart v2raya; $DWM/statusbar/statusbar.sh update icons)'
-fi
+##### STATUSBAR_MENU #####
+    statusbar_menu_items=('all' 'icons' 'coin' 'cpu' 'mem' 'date' 'vol' 'bat')
+    statusbar_menu_cmds=(
+        'coproc ($DWM/statusbar/statusbar.sh updateall    > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update icons > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update coin  > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update cpu   > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update mem   > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update date  > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update vol   > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh update bat   > /dev/null 2>&1)'
+    )
 
-if [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ]; then
-    menu_items[3]='close picom';  cmds[3]='killall picom'
-else 
-    menu_items[3]='open picom';   cmds[3]='coproc (picom --experimental-backends --config ~/scripts/config/picom.conf > /dev/null 2>&1)'
-fi
+##### TOGGLE_SERVER_MENU #####
+    toggle_server_menu_items[1]='open v2raya'
+    toggle_server_menu_items[2]='open picom'
+    toggle_server_menu_items[3]='open easyeffects'
+    toggle_server_menu_items[4]='open GO111MODULE'
+    toggle_server_menu_cmds[1]='coproc (sudo docker restart v2raya; $DWM/statusbar/statusbar.sh update icons)'
+    toggle_server_menu_cmds[2]='coproc (picom --experimental-backends --config ~/scripts/config/picom.conf > /dev/null 2>&1)'
+    toggle_server_menu_cmds[3]='coproc (easyeffects --gapplication-service > /dev/null 2>&1)'
+    toggle_server_menu_cmds[4]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
+    # 根据不同的条件判断单项的值和操作
+    [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_items[1]='close v2raya'
+    [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_cmds[1]='coproc (sudo docker stop v2raya; $DWM/statusbar/statusbar.sh update icons)'
+    [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[2]='close picom' 
+    [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[2]='killall picom'
+    [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[3]='close easyeffects'
+    [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[3]='killall easyeffects'
+    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[4]='close GO111MODULE'
+    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_cmds[4]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
 
-if [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ]; then
-    menu_items[4]='close easyeffects'; cmds[4]='killall easyeffects'
-else 
-    menu_items[4]='open easyeffects';  cmds[4]='coproc (easyeffects --gapplication-service > /dev/null 2>&1)'
-fi
+###### SHOW MENU ######
+    show_main_menu() {
+        echo -e "\0prompt\x1fmenu\n"
+        echo -en "\0data\x1fMAIN_MENU\n"
+        for item in "${main_menu_items[@]}"; do
+            echo "$item"
+        done
+    }
+    show_statusbar_menu() {
+        echo -e "\0prompt\x1fstatusbar\n"
+        echo -en "\0data\x1fSTATUSBAR_MENU\n"
+        for item in "${statusbar_menu_items[@]}"; do
+            echo "$item"
+        done
+    }
+    show_toggle_server_menu() {
+        echo -e "\0prompt\x1ftoggle\n"
+        echo -en "\0data\x1fTOGGLE_SERVER_MENU\n"
+        for item in "${toggle_server_menu_items[@]}"; do
+            echo "$item"
+        done
+    }
 
-if [ "$GO111MODULE" = 'on' ]; then
-    menu_items[5]='close GO111MODULE'; cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
-else 
-    menu_items[5]='open GO111MODULE';  cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
-fi
+##### JUDGE #####
+    judge() {
+        [ "$ROFI_DATA" ] && MENU=$ROFI_DATA || MENU="MAIN_MENU" # 如果设置了ROFI_DATA（由 echo -en "\0data\x1fDATA值\n" 来传递）则使用ROFI_DATA对应的MENU，若空即MAIN_MENU
+        # 根据不同的menu和item值执行相应的命令
+        case $MENU in
+            MAIN_MENU)
+                for i in "${!main_menu_items[@]}"; do
+                    [ "$*" = "${main_menu_items[$i]}" ] && eval "${main_menu_cmds[$i]}"
+                done
+            ;;
+            STATUSBAR_MENU)
+                for i in "${!statusbar_menu_items[@]}"; do
+                    [ "$*" = "${statusbar_menu_items[$i]}" ] && eval "${statusbar_menu_cmds[$i]}"
+                done
+                show_statusbar_menu # 执行完成后不退出脚本 继续执行statusbar_menu
+            ;;
+            TOGGLE_SERVER_MENU)
+                for i in "${!toggle_server_menu_items[@]}"; do
+                    [ "$*" = "${toggle_server_menu_items[$i]}" ] && eval "${toggle_server_menu_cmds[$i]}"
+                done
+            ;;
+        esac
+    }
 
-show_menu() {
-    echo -e "\0prompt\x1fmenu"
-    for item in "${menu_items[@]}"; do
-        echo "$item"
-    done
-}
-
-[ ! "$*" ] && show_menu && exit 0
-for i in "${!menu_items[@]}"; do
-    [ "$*" = "${menu_items[$i]}" ] && eval "${cmds[$i]}"
-done
+##### 程序执行入口 #####
+    [ ! "$*" ] && show_main_menu && exit 
+    judge $*
