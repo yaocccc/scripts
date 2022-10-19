@@ -10,8 +10,8 @@ source ~/.profile
     main_menu_items=('set wallpaper' 'update statusbar' 'toggle server')
     main_menu_cmds=(
         'feh --randomize --bg-fill ~/Pictures/002/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
-        'show_statusbar_menu'
-        'show_toggle_server_menu'
+        'echo -en "\0new-selection\x1ftrue\n"; show_statusbar_menu'
+        'echo -en "\0new-selection\x1ftrue\n"; show_toggle_server_menu'
     )
 
 ##### STATUSBAR_MENU #####
