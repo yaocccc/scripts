@@ -1,3 +1,5 @@
+# https://github.com/davatorium/rofi/blob/next/doc/rofi-script.5.markdown
+#
 # rofi -show 自定义 -modi "自定义:~/rofi.sh"
 #   1: 上述命令可调用rofi.sh作为自定义脚本
 #   2: 将打印的内容作为rofi的选项
@@ -10,8 +12,8 @@ source ~/.profile
     main_menu_items=('set wallpaper' 'update statusbar' 'toggle server')
     main_menu_cmds=(
         'feh --randomize --bg-fill ~/Pictures/002/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
-        'echo -en "\0new-selection\x1ftrue\n"; show_statusbar_menu'
-        'echo -en "\0new-selection\x1ftrue\n"; show_toggle_server_menu'
+        'echo -en "\0new-selection\x1ftrue\n"; show_statusbar_menu'      # 加前面的echo是设置进入二级菜单时将selection置为新
+        'echo -en "\0new-selection\x1ftrue\n"; show_toggle_server_menu'  # 加前面的echo是设置进入二级菜单时将selection置为新
     )
 
 ##### STATUSBAR_MENU #####
@@ -94,5 +96,4 @@ source ~/.profile
     }
 
 ##### 程序执行入口 #####
-    [ ! "$*" ] && show_main_menu && exit 
-    judge $*
+    [ ! "$*" ] && show_main_menu || judge $*
