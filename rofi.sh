@@ -19,7 +19,7 @@ source ~/.profile
 ##### STATUSBAR_MENU #####
     statusbar_menu_items=('all' 'icons' 'coin' 'cpu' 'mem' 'date' 'vol' 'bat')
     statusbar_menu_cmds=(
-        'coproc ($DWM/statusbar/statusbar.sh updateall    > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh updateall    > /dev/null 2>&1)' # coproc (...) 未执行子进程语法 可以有效防止rofi脚本卡死
         'coproc ($DWM/statusbar/statusbar.sh update icons > /dev/null 2>&1)'
         'coproc ($DWM/statusbar/statusbar.sh update coin  > /dev/null 2>&1)'
         'coproc ($DWM/statusbar/statusbar.sh update cpu   > /dev/null 2>&1)'
@@ -33,11 +33,13 @@ source ~/.profile
     toggle_server_menu_items[1]='open v2raya'
     toggle_server_menu_items[2]='open picom'
     toggle_server_menu_items[3]='open easyeffects'
-    toggle_server_menu_items[4]='open GO111MODULE'
+    toggle_server_menu_items[4]='open aria2c'
+    toggle_server_menu_items[5]='open GO111MODULE'
     toggle_server_menu_cmds[1]='coproc (sudo docker restart v2raya; $DWM/statusbar/statusbar.sh update icons)'
     toggle_server_menu_cmds[2]='coproc (picom --experimental-backends --config ~/scripts/config/picom.conf > /dev/null 2>&1)'
     toggle_server_menu_cmds[3]='coproc (easyeffects --gapplication-service > /dev/null 2>&1)'
-    toggle_server_menu_cmds[4]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
+    toggle_server_menu_cmds[4]='coproc (aria2c > /dev/null 2>&1); $DWM/statusbar/statusbar.sh update icons'
+    toggle_server_menu_cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
     # 根据不同的条件判断单项的值和操作
     [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_items[1]='close v2raya'
     [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_cmds[1]='coproc (sudo docker stop v2raya; $DWM/statusbar/statusbar.sh update icons)'
@@ -45,8 +47,10 @@ source ~/.profile
     [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[2]='killall picom'
     [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[3]='close easyeffects'
     [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[3]='killall easyeffects'
-    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[4]='close GO111MODULE'
-    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_cmds[4]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
+    [ "$(ps aux | grep aria2c | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[4]='close aria2c'
+    [ "$(ps aux | grep aria2c | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[4]='killall aria2c'
+    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[5]='close GO111MODULE'
+    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
 
 ###### SHOW MENU ######
     show_main_menu() {
