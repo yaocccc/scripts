@@ -1,7 +1,7 @@
 #! /bin/bash
 :<<!
   设置屏幕分辨率的脚本(xrandr命令的封装)
-  one: 只展示一个内置屏幕 2560x1600 缩放比 0.5625x0.5625
+  one: 只展示一个内置屏幕 2560x1600 缩放为 1440x900
   two: 左边展示外接屏幕 - 右边展示内置屏幕 都用匹配1080p屏幕DPI的缩放比
   check: 检测显示器连接状态是否变化 变化则自动调整输出情况
 !
@@ -30,8 +30,8 @@ one() {
 check() {
     CONNECTED_PORTS=$(xrandr | grep -w 'connected' | awk '{print $1}' | wc -l)
     CONNECTED_MONITORS=$(xrandr --listmonitors | sed 1d | awk '{print $4}' | wc -l)
-    [ $CONNECTED_PORTS -gt $CONNECTED_MONITORS ] && two # 如果当前连接接口多余当前输出屏幕 则调用two
-    [ $CONNECTED_PORTS -lt $CONNECTED_MONITORS ] && one # 如果当前连接接口少余当前输出屏幕 则调用one
+    [ $CONNECTED_PORTS -gt $CONNECTED_MONITORS ] && two # 如果当前连接接口多于当前输出屏幕 则调用two
+    [ $CONNECTED_PORTS -lt $CONNECTED_MONITORS ] && one # 如果当前连接接口少于当前输出屏幕 则调用one
 }
 
 case $1 in
