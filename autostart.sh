@@ -16,14 +16,11 @@ settings() {
 daemons() {
     [ $1 ] && sleep $1
     fcitx5 &
-    pactl info &
     nm-applet &
-    flameshot &
     xfce4-power-manager &
     dunst -conf ~/scripts/config/dunst.conf &
     lemonade server &
     picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 &
-    # easyeffects --gapplication-service >> /dev/null 2>&1 &
 }
 
 every10s() {

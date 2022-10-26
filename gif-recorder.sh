@@ -24,14 +24,16 @@ getregion() {
     let x=${xywh[0]} y=${xywh[1]} w=${xywh[2]} h=${xywh[3]}
 }
 
-case $SCREEN_MODE in
-    ONE) S1_X=0 S1_Y=0 ;;
-    TWO) S1_X=1920 S1_Y=325 S2_X=0 S2_Y=0 ;;
+CONNECTED_MONITORS=$(xrandr --listmonitors | sed 1d | awk '{print $4}' | wc -l)
+
+case $CONNECTED_MONITORS in
+    1) S1_X=0 S1_Y=0 ;;
+    2) S1_X=1920 S1_Y=325 S2_X=0 S2_Y=0 ;;
     *) exit ;;
 esac
 
-case $SCREEN_MODE in
-    ONE)
+case $CONNECTED_MONITORS in
+    1)
         menu_items=('选择窗口' '选择区域' '内置屏幕-全屏')
         menu
         case $item in
