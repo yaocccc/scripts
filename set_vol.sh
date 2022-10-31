@@ -1,11 +1,6 @@
 #! /bin/bash
 
-source ~/.profile
-
-OUTPORT=$SPEAKER
-[ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP)" ] && OUTPORT=$HEADPHONE_HSP_HFP
-[ "$(pactl list sinks | grep $HEADPHONE_HSP_HFP_SONY)" ] && OUTPORT=$HEADPHONE_HSP_HFP_SONY
-pactl list sinks
+OUTPORT=$(pactl info | grep 'Default Sink' | awk '{print $3}')
 
 case $1 in
     up) pactl set-sink-volume $OUTPORT +5% ;;
