@@ -38,8 +38,7 @@ every1000s() {
     while true
     do
         xset -b
-        xmodmap ~/scripts/config/xmodmap.conf
-        sleep 1000
+        sleep 300
         feh --randomize --bg-fill ~/Pictures/002/*.png
     done
 }
@@ -47,4 +46,4 @@ every1000s() {
 settings 1 &
 daemons 3 &
 every10s 5 &
-every1000s 30 &
+every300s 30 &
