@@ -33,7 +33,7 @@ every10s() {
     done
 }
 
-every1000s() {
+every300s() {
     [ $1 ] && sleep $1
     while true
     do
