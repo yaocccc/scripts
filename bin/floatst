@@ -1,5 +1,0 @@
-currentdir=$(cd $(dirname $0);pwd)
-source $currentdir/st_geometry
-
-[ "$*" ] && st -c float -g $(st_geometry center ${2:-80} ${3:-27}) -e "$1"
-[ ! "$*" ] && st -c float -g $(st_geometry center 100 30)
