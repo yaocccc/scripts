@@ -43,8 +43,8 @@ source ~/.profile
     # 根据不同的条件判断单项的值和操作
     [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_items[1]='close v2raya'
     [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_cmds[1]='coproc (sudo docker stop v2raya; $DWM/statusbar/statusbar.sh update icons)'
-    [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[2]='close picom' 
-    [ "$(ps aux | grep picom | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[2]='killall picom'
+    [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_items[2]='close picom' 
+    [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_cmds[2]='killall picom'
     [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[3]='close easyeffects'
     [ "$(ps aux | grep easyeffects | grep -v 'grep\|rofi')" ] && toggle_server_menu_cmds[3]='killall easyeffects'
     [ "$(ps aux | grep aria2c | grep -v 'grep\|rofi')" ] && toggle_server_menu_items[4]='close aria2c'
