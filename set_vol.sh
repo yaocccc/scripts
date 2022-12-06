@@ -5,4 +5,4 @@ case $1 in
     down) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
 esac
 
-$DWM/statusbar/statusbar.sh update vol
+notify-send -r 9527 Volume "$($DWM/statusbar/statusbar.sh update vol)" -i audio-volume-medium
