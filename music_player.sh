@@ -6,6 +6,7 @@ source $currentdir/bin/st_geometry
 close_music() {
     ncmpcpp_pid=`ps -u $USER -o pid,comm | grep 'ncmpcpp' | awk '{print $1}'`
     mpd_pid=`ps -u $USER -o pid,comm | grep 'mpd' | awk '{print $1}'`
+    cava_pid=`ps -u $USER -o pid,comm | grep 'cava' | awk '{print $1}'`
     killed=1
     if [ "$ncmpcpp_pid" ]; then
         kill -9 $ncmpcpp_pid
@@ -13,6 +14,10 @@ close_music() {
     fi
     if [ "$mpd_pid" ]; then
         kill -9 $mpd_pid
+        killed=0
+    fi
+    if [ "$cava_pid" ]; then
+        kill -9 $cava_pid
         killed=0
     fi
     return $killed
