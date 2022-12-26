@@ -1,4 +1,5 @@
 #! /bin/bash
+# 依赖包： i3lock-color
 
 i3lock \
     --blur 5 \
