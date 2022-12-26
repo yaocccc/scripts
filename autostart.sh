@@ -9,7 +9,7 @@ settings() {
     xset -b
     syndaemon -i 1 -t -K -R -d
     xss-lock -- ~/scripts/blurlock.sh &
-    ~/scripts/set-screen.sh two &
+    ~/scripts/set_screen.sh two &
     $DWM/statusbar/statusbar.sh cron &
 }
 
@@ -28,7 +28,7 @@ every10s() {
     [ $1 ] && sleep $1
     while true
     do
-        ~/scripts/set-screen.sh check &
+        ~/scripts/set_screen.sh check &
         sleep 10
     done
 }
@@ -39,7 +39,7 @@ every300s() {
     do
         xset -b
         sleep 300
-        feh --randomize --bg-fill ~/Pictures/002/*.png
+        feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
     done
 }
 

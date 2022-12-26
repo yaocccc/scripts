@@ -12,7 +12,7 @@ source ~/.profile
     main_menu_items=('set wallpaper' 'update statusbar' 'toggle server' 'set backlight')
     main_menu_cmds=(
         'feh --randomize --bg-fill ~/Pictures/wallpaper/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
-        'coproc ($DWM/statusbar/statusbar.sh updateall > /dev/null 2>&1)'
+        'coproc ($DWM/statusbar/statusbar.sh updateall > /dev/null 2>&1); show_main_menu'
         'echo -en "\0new-selection\x1ftrue\n"; show_toggle_server_menu'  # 加前面的echo是设置进入二级菜单时将selection置为新
         'echo -en "\0new-selection\x1ftrue\n"; show_set_backlight_menu'  # 加前面的echo是设置进入二级菜单时将selection置为新
     )
