@@ -18,7 +18,6 @@ daemons() {
     fcitx5 &
     nm-applet &
     flameshot & # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
-    xfce4-power-manager &
     dunst -conf ~/scripts/config/dunst.conf &
     lemonade server &
     picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 &
