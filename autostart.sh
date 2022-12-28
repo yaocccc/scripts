@@ -36,7 +36,11 @@ every300s() {
     [ $1 ] && sleep $1
     while true
     do
+        # 以下两个有某些情况下会失效 故在定时任务中执行
+        # 消除bell声
+        # CapsLock to Escape 不过这玩意在启动fcitx或者更换键盘时会失效
         xset -b
+        xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
         sleep 300
         feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
     done
@@ -45,4 +49,4 @@ every300s() {
 settings 1 &
 daemons 3 &
 every10s 5 &
-every300s 30 &
+every300s 10 &
