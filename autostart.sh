@@ -5,44 +5,34 @@ source ~/.profile
 
 settings() {
     [ $1 ] && sleep $1
-    xset s 600
-    xset -b
-    syndaemon -i 1 -t -K -R -d
-    xss-lock -- ~/scripts/blurlock.sh &
-    ~/scripts/set_screen.sh two &
-    $DWM/statusbar/statusbar.sh cron &
+    xset s 600                                # 设置自动锁屏时间 600s
+    xset dpms 1200 0 0                        # 设置自动关闭显示器时间 1200s 后面两个0代表不使用suspend和off
+    xset -b                                   # 关闭蜂鸣器
+    syndaemon -i 1 -t -K -R -d                # 设置使用键盘时触控板短暂失效
+    ~/scripts/set_screen.sh two               # 设置显示器
 }
 
 daemons() {
     [ $1 ] && sleep $1
-    fcitx5 &
-    nm-applet &
-    flameshot & # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
-    dunst -conf ~/scripts/config/dunst.conf &
-    lemonade server &
-    picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 &
+    $DWM/statusbar/statusbar.sh cron &        # 开启状态栏定时更新
+    xss-lock -- ~/scripts/blurlock.sh &       # 开启自动锁屏程序
+    fcitx5 &                                  # 开启输入法
+    nm-applet &                               # 开启网络管理器系统托盘
+    flameshot &                               # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
+    dunst -conf ~/scripts/config/dunst.conf & # 开启通知server
+    picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & # 开启picom
 }
 
-every10s() {
+cron() {
     [ $1 ] && sleep $1
-    while true
-    do
-        ~/scripts/set_screen.sh check &
-        sleep 10
+    let i=10
+    while true; do
+        [ $((i % 10)) -eq 0 ] && ~/scripts/set_screen.sh check # 每10秒检查显示器状态 以此自动设置显示器
+        [ $((i % 300)) -eq 0 ] && feh --randomize --bg-fill ~/Pictures/wallpaper/*.png # 每300秒更新壁纸
+        sleep 10; let i+=10
     done
 }
 
-every300s() {
-    [ $1 ] && sleep $1
-    while true
-    do
-        xset -b
-        sleep 300
-        feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
-    done
-}
-
-settings 1 &
-daemons 3 &
-every10s 5 &
-every300s 10 &
+settings 1 &                                  # 初始化设置项
+daemons 3 &                                   # 后台程序项
+cron 5 &                                      # 定时任务项
