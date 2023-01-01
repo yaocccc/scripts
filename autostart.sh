@@ -5,8 +5,6 @@ source ~/.profile
 
 settings() {
     [ $1 ] && sleep $1
-    xset s 600                                # 设置自动锁屏时间 600s
-    xset dpms 1200 0 0                        # 设置自动关闭显示器时间 1200s 后面两个0代表不使用suspend和off
     xset -b                                   # 关闭蜂鸣器
     syndaemon -i 1 -t -K -R -d                # 设置使用键盘时触控板短暂失效
     ~/scripts/set_screen.sh two               # 设置显示器
@@ -17,7 +15,7 @@ daemons() {
     $DWM/statusbar/statusbar.sh cron &        # 开启状态栏定时更新
     xss-lock -- ~/scripts/blurlock.sh &       # 开启自动锁屏程序
     fcitx5 &                                  # 开启输入法
-    nm-applet &                               # 开启网络管理器系统托盘
+    sudo nm-applet &                               # 开启网络管理器系统托盘
     flameshot &                               # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
     dunst -conf ~/scripts/config/dunst.conf & # 开启通知server
     picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & # 开启picom
