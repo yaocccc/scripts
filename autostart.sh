@@ -15,7 +15,6 @@ daemons() {
     $DWM/statusbar/statusbar.sh cron &        # 开启状态栏定时更新
     xss-lock -- ~/scripts/blurlock.sh &       # 开启自动锁屏程序
     fcitx5 &                                  # 开启输入法
-    sudo nm-applet &                               # 开启网络管理器系统托盘
     flameshot &                               # 截图要跑一个程序在后台 不然无法将截图保存到剪贴板
     dunst -conf ~/scripts/config/dunst.conf & # 开启通知server
     picom --experimental-backends --config ~/scripts/config/picom.conf >> /dev/null 2>&1 & # 开启picom
