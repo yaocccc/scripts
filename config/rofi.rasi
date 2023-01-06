@@ -1,0 +1,88 @@
+configuration {
+  display-drun: "";
+  display-window: "";
+  display-windowcd: "";
+  display-ssh: "";
+  display-run: "﮸";
+  show-icons: false;
+  drun-display-format: "{icon} {name}";
+  window-format: "{icon} {name}";
+  run {
+      fallback-icon: "application-octet-stream";
+  }
+  drun {
+      fallback-icon: "application-octet-stream";
+  }
+  window {
+      fallback-icon: "application-octet-stream";
+  }
+}
+
+* {
+  font: "JetBrainsMono Nerd Font Mono 12.5";
+  background-color: transparent;
+  text-color: #f1f1f1;
+  width: 680px;
+  height: 300px;
+  location: 0;
+  spacing: 0;
+  transparent: rgba(34,62,79,0.80);
+  transparent-light: rgba(34,82,99);
+}
+
+window {
+    location: center;
+    anchor:   center;
+    background-color:@transparent;
+    spacing: 0;
+    children:  [mainbox];
+    orientation: horizontal;
+}
+
+inputbar {
+  border: 0 0 1px 0;
+  children: [prompt,entry];
+}
+
+prompt {
+  padding: 0px 13px 0px 13px;
+  border: 0 1px 0 0;
+  vertical-align: 0.5;
+}
+
+textbox {
+  background-color:@transparent;
+  border: 0 0 1px 0;
+  border-color: #161B1A;
+  padding: 8px 13px;
+}
+
+entry {
+  padding: 13px;
+}
+
+listview {
+  cycle: false;
+  margin: 0 0 -1px 0;
+  scrollbar: false;
+}
+
+element {
+  border: 0 0 1px 0;
+  padding: 4px;
+}
+
+element-text {
+  expand: true;
+  vertical-align: 0.5;
+  padding: 0px 13px;
+}
+
+element selected {
+  background-color: @transparent-light;
+}
+
+element-icon {
+    size: 30px;
+    border: 0px;
+}
