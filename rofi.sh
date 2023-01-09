@@ -18,22 +18,22 @@ source ~/.profile
     )
 
 ##### TOGGLE_SERVER_MENU #####
-    toggle_server_menu_items[1]='open v2raya'
-    toggle_server_menu_items[2]='open picom'
-    toggle_server_menu_items[5]='open GO111MODULE'
+    toggle_server_menu_items[1]=' open v2raya'
+    toggle_server_menu_items[2]=' open picom'
+    toggle_server_menu_items[5]=' open GO111MODULE'
     toggle_server_menu_cmds[1]='coproc (sudo docker restart v2raya > /dev/null && $DWM/statusbar/statusbar.sh updateall > /dev/null)'
     toggle_server_menu_cmds[2]='coproc (picom --experimental-backends --config ~/scripts/config/picom.conf > /dev/null 2>&1)'
     toggle_server_menu_cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=on/g" ~/.profile'
     # 根据不同的条件判断单项的值和操作
-    [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_items[1]='close v2raya'
+    [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_items[1]=' close v2raya'
     [ "$(sudo docker ps | grep v2raya)" ] && toggle_server_menu_cmds[1]='coproc (sudo docker stop v2raya > /dev/null && $DWM/statusbar/statusbar.sh updateall > /dev/null)'
-    [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_items[2]='close picom' 
+    [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_items[2]=' close picom' 
     [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_cmds[2]='killall picom'
-    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[5]='close GO111MODULE'
+    [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[5]=' close GO111MODULE'
     [ "$GO111MODULE" = 'on' ] && toggle_server_menu_cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
 
 ##### SET BACKLIGHT #####
-    set_backlight_menu_items=('内置屏幕' '外置屏幕')
+    set_backlight_menu_items=(' 内置屏幕' ' 外置屏幕')
     set_backlight_menu_cmds=('show_set_backlight_menu2 内置屏幕' 'show_set_backlight_menu2 外置屏幕')
     set_backlight_menu_items2=('1.0' '0.8' '0.6' '0.4' '0.2')
 
