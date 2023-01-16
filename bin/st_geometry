@@ -14,7 +14,7 @@ parse_params() {
 parse_default() {
     uw=8; uh=17;  # 单位宽高
     gap=12;       # 边距
-    barh=26;      # 状态栏高度
+    barh=31;      # 状态栏高度
     mx=`xdotool getmouselocation --shell | grep X= | sed 's/X=//'`
     my=`xdotool getmouselocation --shell | grep Y= | sed 's/Y=//'`
     if [ "$mx" -lt 1920 ]; then
