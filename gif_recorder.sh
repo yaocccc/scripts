@@ -8,7 +8,6 @@
 gif_file=~/show.gif
 let x y w h
 source ~/scripts/lib/menu
-source ~/.profile
 
 getwin() {
     XWININFO=$(xwininfo)
@@ -25,38 +24,13 @@ getregion() {
     let x=${xywh[0]} y=${xywh[1]} w=${xywh[2]} h=${xywh[3]}
 }
 
-CONNECTED_MONITORS=$(xrandr --listmonitors | sed 1d | awk '{print $4}' | wc -l)
-
-case $CONNECTED_MONITORS in
-    1) S1_X=0 S1_Y=0 ;;
-    2) S1_X=1920 S1_Y=325 S2_X=0 S2_Y=0 ;;
-    *) exit ;;
+menu_items=('选择窗口' '选择区域')
+menu
+case $item in
+    '选择窗口') getwin ;;
+    '选择区域') getregion ;;
 esac
 
-case $CONNECTED_MONITORS in
-    1)
-        menu_items=('选择窗口' '选择区域' '内置屏幕-全屏')
-        menu
-        case $item in
-            '选择窗口') getwin ;;
-            '选择区域') getregion ;;
-            '内置屏幕-全屏') let x=$S1_X y=$S1_Y w=1440 h=900 ;;
-        esac
-        ;;
-    *)
-        menu_items=('选择窗口' '选择区域' '内置屏幕-全屏' '外接屏幕-全屏' '外接屏幕-中间区域')
-        menu
-        case $item in
-            '选择窗口') getwin ;;
-            '选择区域') getregion ;;
-            '内置屏幕-全屏') let x=$S1_X     y=$S1_Y     w=1440     h=900 ;;
-            '外接屏幕-全屏') let x=$S2_X     y=$S2_Y     w=1920     h=1080 ;;
-            '外接屏幕-中间区域') let x=$S2_X+478 y=$S2_Y+229 w=964      h=736 ;;
-        esac
-        ;;
-esac
-
-[ "$*" ] && _cmd="$*"
-[ -z "$_cmd" ] && printf "输入附加命令[回车结束]: " && read _cmd
+[ -z "$_cmd" ] && printf "输入命令(gif会在命令结束时停止录制)[回车结束]: " && read _cmd
 [ -z "$_cmd" ] && byzanz-record -x $x -y $y -w $w -h $h -v $gif_file || byzanz-record -x $x -y $y -w $w -h $h -v $gif_file --exec="$_cmd"
 sleep 1
