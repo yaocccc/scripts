@@ -9,12 +9,11 @@
 source ~/.profile
 
 ##### MAIN_MENU ####
-    main_menu_items=(' set wallpaper' '艹 update statusbar' ' toggle server' ' set backlight')
+    main_menu_items=(' set wallpaper' '艹 update statusbar' ' toggle server')
     main_menu_cmds=(
         'feh --randomize --bg-fill ~/Pictures/wallpaper/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
         'coproc ($DWM/statusbar/statusbar.sh updateall > /dev/null 2>&1); show_main_menu'
         'show_toggle_server_menu'
-        'show_set_backlight_menu'
     )
 
 ##### TOGGLE_SERVER_MENU #####
@@ -31,11 +30,6 @@ source ~/.profile
     [ "$(ps aux | grep picom | grep -v 'grep\|rofi\|nvim')" ] && toggle_server_menu_cmds[2]='killall picom'
     [ "$GO111MODULE" = 'on' ] && toggle_server_menu_items[5]=' close GO111MODULE'
     [ "$GO111MODULE" = 'on' ] && toggle_server_menu_cmds[5]='sed -i "s/GO111MODULE=.*/GO111MODULE=off/g" ~/.profile'
-
-##### SET BACKLIGHT #####
-    set_backlight_menu_items=(' 内置屏幕' ' 外置屏幕')
-    set_backlight_menu_cmds=('show_set_backlight_menu2 内置屏幕' 'show_set_backlight_menu2 外置屏幕')
-    set_backlight_menu_items2=('1.0' '0.8' '0.6' '0.4' '0.2')
 
 ###### SHOW MENU ######
     show_main_menu() {
@@ -54,22 +48,6 @@ source ~/.profile
             echo "$item"
         done
     }
-    show_set_backlight_menu() {
-        echo -en "\0new-selection\x1ftrue\n"
-        echo -e "\0prompt\x1fselect\n"
-        echo -en "\0data\x1fSET_BACKLIGHT_MENU\n"
-        for item in "${set_backlight_menu_items[@]}"; do
-            echo "$item"
-        done
-    }
-    show_set_backlight_menu2() {
-        echo -en "\0new-selection\x1ftrue\n"
-        echo -e "\0prompt\x1flight\n"
-        echo -en "\0data\x1fSET_BACKLIGHT_$1\n"
-        for item in "${set_backlight_menu_items2[@]}"; do
-            echo "$item"
-        done
-    }
 
 ##### JUDGE #####
     judge() {
@@ -85,19 +63,6 @@ source ~/.profile
                 for i in "${!toggle_server_menu_items[@]}"; do
                     [ "$*" = "${toggle_server_menu_items[$i]}" ] && eval "${toggle_server_menu_cmds[$i]}"
                 done
-            ;;
-            SET_BACKLIGHT_MENU)
-                for i in "${!set_backlight_menu_items[@]}"; do
-                    [ "$*" = "${set_backlight_menu_items[$i]}" ] && eval "${set_backlight_menu_cmds[$i]}"
-                done
-            ;;
-            SET_BACKLIGHT_内置屏幕)
-                out=eDP-1; light=$1
-                xrandr --output $out --brightness $light
-            ;;
-            SET_BACKLIGHT_外置屏幕)
-                out=$(xrandr | grep -v eDP-1 | grep -w 'connected' | awk '{print $1}'); light=$1
-                xrandr --output $out --brightness $light
             ;;
         esac
     }
