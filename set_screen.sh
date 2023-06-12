@@ -11,14 +11,30 @@ INNER_PORT=eDP-1
 OUTPORT1=DP-1
 OUTPORT2=DP-2
 
+MODE=LR # LR 左右 TB 上下
+[ "$(xrandr | grep '3440x1440')" ] && MODE=HLR
+
 two() {
     # 查找已连接、未连接的外接接口
     OUTPORT_CONNECTED=$(xrandr | grep -v $INNER_PORT | grep -w 'connected' | awk '{print $1}')
     OUTPORT_DISCONNECTED=$(xrandr | grep -v $INNER_PORT | grep -w 'disconnected' | awk '{print $1}')
     [ ! "$OUTPORT_CONNECTED" ] && one && return # 如果没有外接屏幕则直接调用one函数
-    xrandr --output $INNER_PORT --mode 1440x900 --pos 1920x320 --scale 1x1 \
-           --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
-           --output $OUTPORT_DISCONNECTED --off
+
+    [ $MODE = "LR" ] && \
+        xrandr --output $INNER_PORT --mode 1440x900 --pos 1920x320 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
+               --output $OUTPORT_DISCONNECTED --off
+
+    [ $MODE = "HLR" ] && \
+        xrandr --output $INNER_PORT --mode 1440x900 --pos 2560x320 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 2560x1080 --pos 0x0 --scale 1x1 --primary \
+               --output $OUTPORT_DISCONNECTED --off
+
+    [ $MODE = "TB" ] && \
+        xrandr --output $INNER_PORT --mode 1440x900 --pos 500x1080 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
+               --output $OUTPORT_DISCONNECTED --off
+
     feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
 }
 one() {

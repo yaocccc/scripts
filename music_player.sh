@@ -30,3 +30,4 @@ open_music() {
 }
 
 close_music || open_music
+$DWM/statusbar/statusbar.sh update music
