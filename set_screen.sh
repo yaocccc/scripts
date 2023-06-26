@@ -6,42 +6,45 @@
   check: 检测显示器连接状态是否变化 变化则自动调整输出情况
 !
 
-# 定义内置屏幕接口和外接屏幕接口
-INNER_PORT=eDP-1
-OUTPORT1=DP-1
-OUTPORT2=DP-2
 
-MODE=LR # LR 左右 TB 上下
-[ "$(xrandr | grep '3440x1440')" ] && MODE=HLR
+MODE=LR           # LR 左右 TB 上下
+INNER_PORT=eDP-1  # 定义内置屏幕接口
+
+[ "$(xrandr | grep '3440x1440')" ] && MODE=H$MODE # 相应的高分辨率模式
+
+setbg() {
+    feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
+}
 
 two() {
     # 查找已连接、未连接的外接接口
     OUTPORT_CONNECTED=$(xrandr | grep -v $INNER_PORT | grep -w 'connected' | awk '{print $1}')
-    OUTPORT_DISCONNECTED=$(xrandr | grep -v $INNER_PORT | grep -w 'disconnected' | awk '{print $1}')
     [ ! "$OUTPORT_CONNECTED" ] && one && return # 如果没有外接屏幕则直接调用one函数
 
-    [ $MODE = "LR" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 1920x320 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
-               --output $OUTPORT_DISCONNECTED --off
+    for sc in $(xrandr | grep -w 'disconnected' | awk '{print $1}'); do xrandr --output $sc --off; done
 
-    [ $MODE = "HLR" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 2560x320 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 2560x1080 --pos 0x0 --scale 1x1 --primary \
-               --output $OUTPORT_DISCONNECTED --off
+    [ $MODE = "LR" ] && \
+        xrandr --output $INNER_PORT --mode 2880x1800 --pos 1920x320 --scale 0.5x0.5 \
+               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 0.9999x0.9999 --primary \
 
     [ $MODE = "TB" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 500x1080 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
-               --output $OUTPORT_DISCONNECTED --off
+        xrandr --output $INNER_PORT --mode 2880x1800 --pos 500x1080 --scale 0.5x0.5 \
+               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 0.9999x0.9999 --primary \
 
-    feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
+    [ $MODE = "HLR" ] && \
+        xrandr --output $INNER_PORT --mode 2880x1800 --pos 2560x320 --scale 0.5x0.5 \
+               --output $OUTPORT_CONNECTED --mode 2560x1080 --pos 0x0 --scale 0.9999x0.9999 --primary \
+
+    [ $MODE = "HTB" ] && \
+        xrandr --output $INNER_PORT --mode 2880x1800 --pos 500x1080 --scale 0.5x0.5 \
+               --output $OUTPORT_CONNECTED --mode 2560x1080 --pos 0x0 --scale 0.9999x0.9999 --primary \
+
+    setbg
 }
 one() {
-    xrandr --output $INNER_PORT --mode 1440x900 --pos 0x0 --scale 1x1 --primary \
-           --output $OUTPORT1 --off \
-           --output $OUTPORT2 --off
-    feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
+    for sc in $(xrandr | grep -w 'disconnected' | awk '{print $1}'); do xrandr --output $sc --off; done
+    xrandr --output $INNER_PORT --mode 2880x1800 --pos 0x0 --scale 0.5x0.5 --primary \
+    setbg
 }
 check() {
     CONNECTED_PORTS=$(xrandr | grep -w 'connected' | awk '{print $1}' | wc -l)
