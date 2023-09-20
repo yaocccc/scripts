@@ -21,27 +21,27 @@ two() {
     [ ! "$OUTPORT_CONNECTED" ] && one && return # 如果没有外接屏幕则直接调用one函数
 
     [ $MODE = "LR" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 1920x320 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
+        xrandr --output $INNER_PORT --mode 2560x1600 --pos 1920x320 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 2560x1440 --pos 0x0 --scale 1x1 --primary \
                --output $OUTPORT_DISCONNECTED --off
 
     [ $MODE = "HLR" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 2560x320 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 2560x1080 --pos 0x0 --scale 1x1 --primary \
+        xrandr --output $INNER_PORT --mode 2560x1600 --pos 2560x320 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 2560x1440 --pos 0x0 --scale 1x1 --primary \
                --output $OUTPORT_DISCONNECTED --off
 
     [ $MODE = "TB" ] && \
-        xrandr --output $INNER_PORT --mode 1440x900 --pos 500x1080 --scale 1x1 \
-               --output $OUTPORT_CONNECTED --mode 1920x1080 --pos 0x0 --scale 1x1 --primary \
+        xrandr --output $INNER_PORT --mode 2560x1600 --pos 500x1080 --scale 1x1 \
+               --output $OUTPORT_CONNECTED --mode 2560x1440 --pos 0x0 --scale 1x1 --primary \
                --output $OUTPORT_DISCONNECTED --off
 
-    feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
+    feh --randomize --bg-fill ~/Pictures/wallpaper/*.{png,jpg}
 }
 one() {
-    xrandr --output $INNER_PORT --mode 1440x900 --pos 0x0 --scale 1x1 --primary \
+    xrandr --output $INNER_PORT --mode 2560x1600 --pos 0x0 --scale 1x1 --primary \
            --output $OUTPORT1 --off \
            --output $OUTPORT2 --off
-    feh --randomize --bg-fill ~/Pictures/wallpaper/*.png
+    feh --randomize --bg-fill ~/Pictures/wallpaper/*.{png,jpg}
 }
 check() {
     CONNECTED_PORTS=$(xrandr | grep -w 'connected' | awk '{print $1}' | wc -l)

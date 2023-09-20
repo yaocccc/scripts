@@ -11,7 +11,7 @@ source ~/.profile
 ##### MAIN_MENU ####
     main_menu_items=(' set wallpaper' '艹 update statusbar' ' toggle server')
     main_menu_cmds=(
-        'feh --randomize --bg-fill ~/Pictures/wallpaper/*.png; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
+        'feh --randomize --bg-fill ~/Pictures/wallpaper/*.{png,jpg}; show_main_menu' # 执行完不退出脚本继续执行show_main_menu
         'coproc ($DWM/statusbar/statusbar.sh updateall > /dev/null 2>&1); show_main_menu'
         'show_toggle_server_menu'
     )
