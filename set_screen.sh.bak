@@ -1,0 +1,9 @@
+#! /bin/bash
+: <<!
+  设置屏幕分辨率的脚本(xrandr命令的封装)
+  one: 只展示一个内置屏幕 2560x1600 缩放为 1440x900
+  two: 左边展示外接屏幕 - 右边展示内置屏幕 都用匹配1080p屏幕DPI的缩放比
+  check: 检测显示器连接状态是否变化 变化则自动调整输出情况
+!
+
+xrandr --output eDP-1 --primary --mode 2560x1600 --pos 0x1440 --rotate normal --output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --off --output DP-5 --off
