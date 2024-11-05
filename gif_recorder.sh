@@ -7,7 +7,6 @@
 
 gif_file=~/show.gif
 let x y w h
-source ~/scripts/lib/menu
 
 getwin() {
     XWININFO=$(xwininfo)
@@ -24,8 +23,7 @@ getregion() {
     let x=${xywh[0]} y=${xywh[1]} w=${xywh[2]} h=${xywh[3]}
 }
 
-menu_items=('选择窗口' '选择区域')
-menu
+item=$(echo  -e '选择窗口\n选择区域' | fzf)
 case $item in
     '选择窗口') getwin ;;
     '选择区域') getregion ;;
