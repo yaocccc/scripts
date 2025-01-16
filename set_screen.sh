@@ -25,7 +25,7 @@ __get_inner_view() {
         HTB) echo "--output $INNER_PORT --mode 2880x1800 --scale 0.5x0.5 --pos 500x1080" ;;
         LLR) echo "--output $INNER_PORT --mode 2880x1800 --scale 0.5x0.5 --pos 2560x320" ;;
         LTB) echo "--output $INNER_PORT --mode 2880x1800 --scale 0.5x0.5 --pos 500x1080" ;;
-        THREE) echo "--output $INNER_PORT --mode 2880x1800 --scale 0.5x0.5 --pos 3640x880" ;;
+        THREE) echo "--output $INNER_PORT --mode 2880x1800 --scale 0.5x0.5 --pos 3640x780" ;;
     esac
 }
 
